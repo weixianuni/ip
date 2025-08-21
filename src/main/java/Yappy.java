@@ -2,9 +2,36 @@ import java.util.Scanner;
 
 
 public class Yappy {
+
+
+    public static class Task {
+
+        String completed = " ";
+        String name;
+
+
+        public Task(String name) {
+            this.name = name;
+        }
+
+        public void setCompleted() {
+            this.completed = "X";
+        }
+
+        public void setUncompleted() {
+            this.completed = " ";
+        }
+
+        public String toString() {
+            return "[" + this.completed + "] " + this.name;
+        }
+    }
+
+
+
     public static void main(String[] args) {
 
-        String[] library = new String[100];
+        Task[] library = new Task[100];
         int numOfItems = 0;
 
 
@@ -17,26 +44,40 @@ public class Yappy {
             String inputLine = input.nextLine();
             if (inputLine.equals("bye")) {
                 break;
-            }
-            if (inputLine.equals("list")) {
-                System.out.println("____________________________________________________________");
+            } else if (inputLine.equals("list")) {
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\tHere are the tasks in your list:");
                 for (int i = 0; i < numOfItems; i++) {
                     int num = i + 1;
-                    System.out.println("\t" + num + ". " + library[i]);
+                    Task task = library[i];
+                    System.out.println("\t" + num + "." + task.toString());
                 }
-                System.out.println("____________________________________________________________");
+                System.out.println("\t____________________________________________________________");
                 continue;
+            } else if (inputLine.startsWith("mark")) {
+                int index = Integer.parseInt(inputLine.split(" ")[1]) - 1;
+                library[index].setCompleted();
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\tAlrighty I have marked this task as completed: " + "\n\t\s\s" + library[index].toString());
+                System.out.println("\t____________________________________________________________");
+            } else if (inputLine.startsWith("unmark")) {
+                int index = Integer.parseInt(inputLine.split(" ")[1]) - 1;
+                library[index].setUncompleted();
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\tAlrighty I have marked this task as not completed yet: " + "\n\t\s\s" + library[index].toString());
+                System.out.println("\t____________________________________________________________");
+            } else {
+                library[numOfItems] = new Task(inputLine);
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\tAdded the following task: " + inputLine);
+                System.out.println("\t____________________________________________________________");
+                numOfItems++;
             }
-            library[numOfItems] = inputLine;
-            System.out.println("____________________________________________________________");
-            System.out.println("\tadded: " + inputLine);
-            System.out.println("____________________________________________________________");
-            numOfItems++;
         }
 
-        System.out.println("____________________________________________________________");
+        System.out.println("\t____________________________________________________________");
         System.out.println("\tBye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
+        System.out.println("\t____________________________________________________________");
 
     }
 }
