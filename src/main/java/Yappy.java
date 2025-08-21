@@ -4,31 +4,6 @@ import java.util.Scanner;
 public class Yappy {
 
 
-    public static class Task {
-
-        String completed = " ";
-        String name;
-
-
-        public Task(String name) {
-            this.name = name;
-        }
-
-        public void setCompleted() {
-            this.completed = "X";
-        }
-
-        public void setUncompleted() {
-            this.completed = " ";
-        }
-
-        public String toString() {
-            return "[" + this.completed + "] " + this.name;
-        }
-    }
-
-
-
     public static void main(String[] args) {
 
         Task[] library = new Task[100];
@@ -70,6 +45,7 @@ public class Yappy {
                 library[numOfItems] = new Task(inputLine);
                 System.out.println("\t____________________________________________________________");
                 System.out.println("\tAdded the following task: " + inputLine);
+                System.out.println("\tNow you have " + numOfItems + " tasks in your list.");
                 System.out.println("\t____________________________________________________________");
                 numOfItems++;
             }
