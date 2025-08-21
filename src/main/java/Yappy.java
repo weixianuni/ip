@@ -1,13 +1,12 @@
 import java.util.Scanner;
 
+
 public class Yappy {
     public static void main(String[] args) {
-//        String logo = " ____        _        \n"
-//                + "|  _ \\ _   _| | _____ \n"
-//                + "| | | | | | | |/ / _ \\\n"
-//                + "| |_| | |_| |   <  __/\n"
-//                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
+
+        String[] library = new String[100];
+        int numOfItems = 0;
+
 
         System.out.println("____________________________________________________________");
         System.out.println("\tHello! I'm Yappy\n" + "\tWhat can I do for you?");
@@ -19,9 +18,20 @@ public class Yappy {
             if (inputLine.equals("bye")) {
                 break;
             }
+            if (inputLine.equals("list")) {
+                System.out.println("____________________________________________________________");
+                for (int i = 0; i < numOfItems; i++) {
+                    int num = i + 1;
+                    System.out.println("\t" + num + ". " + library[i]);
+                }
+                System.out.println("____________________________________________________________");
+                continue;
+            }
+            library[numOfItems] = inputLine;
             System.out.println("____________________________________________________________");
-            System.out.println("\t" + inputLine);
+            System.out.println("\tadded: " + inputLine);
             System.out.println("____________________________________________________________");
+            numOfItems++;
         }
 
         System.out.println("____________________________________________________________");
