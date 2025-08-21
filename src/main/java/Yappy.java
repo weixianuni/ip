@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Yappy {
     public static void main(String[] args) {
 //        String logo = " ____        _        \n"
@@ -8,9 +10,23 @@ public class Yappy {
 //        System.out.println("Hello from\n" + logo);
 
         System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Yappy\n" + "What can I do for you?");
+        System.out.println("\tHello! I'm Yappy\n" + "\tWhat can I do for you?");
         System.out.println("____________________________________________________________");
-        System.out.println("Bye. Hope to see you again soon!");
+
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            String inputLine = input.nextLine();
+            if (inputLine.equals("bye")) {
+                break;
+            }
+            System.out.println("____________________________________________________________");
+            System.out.println("\t" + inputLine);
+            System.out.println("____________________________________________________________");
+        }
+
         System.out.println("____________________________________________________________");
+        System.out.println("\tBye. Hope to see you again soon!");
+        System.out.println("____________________________________________________________");
+
     }
 }
