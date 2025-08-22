@@ -42,12 +42,25 @@ public class Yappy {
                 System.out.println("\tAlrighty I have marked this task as not completed yet: " + "\n\t\s\s" + library[index].toString());
                 System.out.println("\t____________________________________________________________");
             } else {
-                library[numOfItems] = new Task(inputLine);
-                System.out.println("\t____________________________________________________________");
-                System.out.println("\tAdded the following task: " + inputLine);
-                System.out.println("\tNow you have " + numOfItems + " tasks in your list.");
-                System.out.println("\t____________________________________________________________");
+                if (inputLine.startsWith("todo")) {
+                    String description = inputLine.substring("todo".length()).trim();
+                    library[numOfItems] = new ToDo(inputLine);
+                } else if (inputLine.startsWith("event")) {
+                    String description = inputLine.substring("event".length()).trim().split("/from")[0];
+                    String when = inputLine.split("/from")[1];
+                    library[numOfItems] = new Event(description, when);
+                } else if (inputLine.startsWith("deadline")) {
+                    String description = inputLine.substring("deadline".length()).trim().split("/by")[0].strip();
+                    String by = inputLine.split("/by")[1].strip();
+                    library[numOfItems] = new Deadline(description, by);
+                }
+
                 numOfItems++;
+
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\tAdded the following task: \n\t\s\s" + library[numOfItems - 1].toString() );
+                System.out.println("\tNow you have " + numOfItems + (numOfItems==1 ? " task ": " tasks ") + "in you list:");
+                System.out.println("\t____________________________________________________________");
             }
         }
 
