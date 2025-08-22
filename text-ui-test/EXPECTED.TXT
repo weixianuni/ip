@@ -4,8 +4,8 @@
 	____________________________________________________________
 	____________________________________________________________
 	 Added the following task:
-	   [T][ ] todo borrow book
-	 Now you have 1 task in the list:
+	   [T][ ] borrow book
+	 Now you have 1 task in the list.
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
@@ -14,10 +14,32 @@
 	____________________________________________________________
 	 Added the following task:
 	   [D][ ] return book (by: Sunday)
-	 Now you have 2 tasks in the list:
+	 Now you have 2 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
 	 Added the following task:
-	   [E][ ] project meeting  (from: Mon 2pm to: 4pm)
-	 Now you have 3 tasks in the list:
+	   [E][ ] project meeting (from: Mon 2pm to: 4pm)
+	 Now you have 3 tasks in the list.
+	____________________________________________________________
+	____________________________________________________________
+	 Please specify the todo task!
+	____________________________________________________________
+	____________________________________________________________
+	 Please specify the event task and time specifications!
+	____________________________________________________________
+	____________________________________________________________
+	 Please specify the index of the task!
+	____________________________________________________________
+	____________________________________________________________
+	 Alrighty I have removed the following task:
+	  [E][ ] project meeting (from: Mon 2pm to: 4pm)
+	 Now you have 2 tasks in the list.
+	____________________________________________________________
+	____________________________________________________________
+	 Oh no! You have selected an invalid index.
+	____________________________________________________________
+	____________________________________________________________
+	 Here are the tasks in your list:
+	 1.[T][ ] borrow book
+	 2.[D][ ] return book (by: Sunday)
 	____________________________________________________________
