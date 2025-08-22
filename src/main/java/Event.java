@@ -11,7 +11,7 @@ public class Event extends Task {
     public String toString() {
         String from = when.split("/to")[0].strip();
         String to = when.split("/to")[1].strip();
-        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + "(from: " + from + " to: " + to + ")";
     }
 }
 
