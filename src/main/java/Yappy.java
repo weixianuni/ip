@@ -1,11 +1,9 @@
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class Yappy {
 
-    static int numOfItems;
     static ArrayList<Task> library = new ArrayList<>();
 
 
@@ -20,21 +18,23 @@ public class Yappy {
     public static void readInput(String inputLine) throws YappyException {
         if (inputLine.equals("list")) {
 
-            String[] messages = new String[numOfItems + 1];
+            String[] messages = new String[library.size() + 1];
             messages[0] = "\t\sHere are the tasks in your list:";
-            for (int i = 0; i < numOfItems; i++) {
+            int i = 0;
+            for (Task task : library) {
                 int num = i + 1;
-                Task task = library.get(i);
                 messages[i + 1] = "\t\s" + num + "." + task.toString();
+                i++;
             }
             printFormat(messages);
         } else if (inputLine.startsWith("mark")) {
             if (!inputLine.trim().contains(" ")) {
-                throw new YappyException("Please specify the index of the task you wish to mark as completed!");
-            } else if (Integer.parseInt(inputLine.split(" ")[1]) - 1 > numOfItems) {
-                throw new YappyException("Please specify a valid task index.\n\t\sNow you have " + numOfItems + (numOfItems==1 ? " task ": " tasks ") + "in the list.");
+                throw new YappyException("Please specify the index of the task!");
             }
             int index = Integer.parseInt(inputLine.split(" ")[1]) - 1;
+            if (index < 0 || index >= library.size()) {
+                throw new YappyException("Oh no! You have selected an invalid index.");
+            }
             library.get(index).setCompleted();
             printFormat(new String[]{"\t\sAlrighty I have marked this task as completed:" + "\n\t\s\s" + library.get(index).toString()});
 
@@ -43,6 +43,9 @@ public class Yappy {
                 throw new YappyException("Please specify the index of the task you wish to mark as uncompleted!");
             }
             int index = Integer.parseInt(inputLine.split(" ")[1]) - 1;
+            if (index < 0 || index >= library.size()) {
+                throw new YappyException("Oh no! You have selected an invalid index.");
+            }
             library.get(index).setUncompleted();
             printFormat(new String[]{"\t\sAlrighty I have marked this task as not completed yet:" + "\n\t\s\s" + library.get(index).toString()});
 
@@ -51,40 +54,44 @@ public class Yappy {
                 throw new YappyException("Please specify the index of the task you wish to delete");
             }
             int index = Integer.parseInt(inputLine.split(" ")[1]) - 1;
+            if (index < 0 || index >= library.size()) {
+                throw new YappyException("Oh no! You have selected an invalid index.");
+            }
+            Task task = library.get(index);
             library.remove(index);
-            numOfItems--;
-            printFormat(new String[]{"\t\sAlrighty I have removed the following task:" + "\n\t\s\s" + library.get(index).toString(), "\t\sNow you have " + + numOfItems + (numOfItems==1 ? " task ": " tasks ") + "in the list."});
+            printFormat(new String[]{"\t\sAlrighty I have removed the following task:" + "\n\t\s\s"
+                    + task, "\t\sNow you have " + + library.size() + (library.size()==1 ? " task ": " tasks ") + "in the list."});
         } else {
             if (inputLine.startsWith("todo")) {
                 if (!inputLine.trim().contains(" ")) {
                     throw new YappyException("Please specify the todo task!");
                 }
                 String description = inputLine.substring("todo".length()).trim();
-                library.add(numOfItems, new ToDo(description));
+                library.add(new ToDo(description));
             } else if (inputLine.startsWith("event")) {
                 if (!inputLine.trim().contains(" ")) {
                     throw new YappyException("Please specify the event task and time specifications!");
                 }
                 String description = inputLine.substring("event".length()).trim().split("/from")[0];
                 String when = inputLine.split("/from")[1];
-                library.add(numOfItems, new Event(description, when));
+                library.add(new Event(description, when));
             } else if (inputLine.startsWith("deadline")) {
                 if (!inputLine.trim().contains(" ")) {
                     throw new YappyException("Please specify the deadline task and deadline!");
                 }
                 String description = inputLine.substring("deadline".length()).trim().split("/by")[0].strip();
                 String by = inputLine.split("/by")[1].strip();
-                library.add(numOfItems, new Deadline(description, by));
+                library.add(new Deadline(description, by));
             } else {
                 throw new YappyException("Sorry!! I do not know what that command is.");
             }
 
-            numOfItems++;
 
-            printFormat(new String[]{"\t\sAdded the following task:\n\t\s\s\s" + library.get(numOfItems - 1).toString(),
-                    "\t\sNow you have " + numOfItems + (numOfItems==1 ? " task ": " tasks ") + "in the list."});
+            printFormat(new String[]{"\t\sAdded the following task:\n\t\s\s\s" + library.get(library.size() - 1).toString(),
+                    "\t\sNow you have " + library.size() + (library.size()==1 ? " task ": " tasks ") + "in the list."});
         }
     }
+
 
     public static void main(String[] args){
 
@@ -104,6 +111,6 @@ public class Yappy {
         }
 
         printFormat(new String[]{"\tBye. Hope to see you again soon!"});
-
+        input.close();
     }
 }
