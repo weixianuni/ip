@@ -4,12 +4,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 
 public class Yappy {
 
     static int numOfItems;
     static ArrayList<Task> library = new ArrayList<>();
+    static Path storagePath = Paths.get("data", "Yappy.txt");
 
 
     public static void printFormat(String[] messages) {
@@ -34,6 +38,12 @@ public class Yappy {
         default:
             throw new YappyException("Incorrect format in Yappy.txt file!");
         }
+    }
+
+    private static void writeToFile(File filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        fw.write(textToAppend);
+        fw.close();
     }
 
     public static void readInput(String inputLine) throws YappyException {
@@ -74,11 +84,14 @@ public class Yappy {
             numOfItems--;
             printFormat(new String[]{"\t\sAlrighty I have removed the following task:" + "\n\t\s\s" + library.get(index).toString(), "\t\sNow you have " + + numOfItems + (numOfItems==1 ? " task ": " tasks ") + "in the list."});
         } else {
+            String line = "";
+
             if (inputLine.startsWith("todo")) {
                 if (!inputLine.trim().contains(" ")) {
                     throw new YappyException("Please specify the todo task!");
                 }
                 String description = inputLine.substring("todo".length()).trim();
+                line = "T | " + description;
                 library.add(numOfItems, new ToDo(description));
             } else if (inputLine.startsWith("event")) {
                 if (!inputLine.trim().contains(" ")) {
@@ -86,6 +99,7 @@ public class Yappy {
                 }
                 String description = inputLine.substring("event".length()).trim().split("/from")[0];
                 String when = inputLine.split("/from")[1];
+                line = "E | " + description + " | " + when;
                 library.add(numOfItems, new Event(description, when));
             } else if (inputLine.startsWith("deadline")) {
                 if (!inputLine.trim().contains(" ")) {
@@ -93,6 +107,7 @@ public class Yappy {
                 }
                 String description = inputLine.substring("deadline".length()).trim().split("/by")[0].strip();
                 String by = inputLine.split("/by")[1].strip();
+                line = "D | " + description + " | " + by;
                 library.add(numOfItems, new Deadline(description, by));
             } else {
                 throw new YappyException("Sorry!! I do not know what that command is.");
@@ -100,16 +115,23 @@ public class Yappy {
 
             numOfItems++;
 
+            File file = storagePath.toFile();
+            try {
+                writeToFile(file, line);
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
+
             printFormat(new String[]{"\t\sAdded the following task:\n\t\s\s\s" + library.get(numOfItems - 1).toString(),
                     "\t\sNow you have " + numOfItems + (numOfItems==1 ? " task ": " tasks ") + "in the list."});
         }
     }
 
+
+
     public static void main(String[] args){
 
-        Path path = Paths.get("..", "data", "Yappy.txt");
-        File file = path.toFile();
-
+        File file = storagePath.toFile();
         try {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
