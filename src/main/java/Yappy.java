@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,6 +17,22 @@ public class Yappy {
             System.out.println(message);
         }
         System.out.println("\t____________________________________________________________");
+    }
+
+    public static void loadInput(String input) throws YappyException{
+        String[] params = input.split("\\|");
+        switch (params[0]) {
+        case "T":
+            library.add(new ToDo(params[1]));
+            break;
+        case "E":
+            library.add(new Event(params[1], params[2]));
+            break;
+        case "D":
+            library.add(new Deadline(params[1], params[2]));
+        default:
+            throw new YappyException("Incorrect format in Yappy.txt file!");
+        }
     }
 
     public static void readInput(String inputLine) throws YappyException {
@@ -88,7 +106,22 @@ public class Yappy {
 
     public static void main(String[] args){
 
-        printFormat(new String[]{"\t\sHello! I'm Yappy\n" + "\t\sWhat can I do for you?"});
+        File file = new File("../data/Yappy.txt");
+
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                readInput(line);
+            }
+            printFormat(new String[]{"\t\sHello! Welcome back!\n" + "\t\sWhat can I do for you?"});
+        } catch (FileNotFoundException e) {
+            printFormat(new String[]{"\t\sHello! I'm Yappy\n" + "\t\sWhat can I do for you?"});
+        } catch (YappyException e) {
+            printFormat(new String[]{"\t\s" + e.getMessage()});
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred: " + e.getMessage());
+        }
 
         Scanner input = new Scanner(System.in);
         while (true) {
