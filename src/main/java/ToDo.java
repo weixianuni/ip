@@ -7,7 +7,7 @@ public class ToDo extends Task {
 
     @Override
     public String fileString() {
-        return "T | " + this.isCompleted + " | " + this.description + "\n";
+        return "T|" + this.isCompleted + "|" + this.description + "\n";
     }
 
     @Override
