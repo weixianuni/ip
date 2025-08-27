@@ -2,9 +2,14 @@ public class Event extends Task {
 
     String when;
 
-    public Event(String description, String when) {
-        super(description);
+    public Event(String description, Boolean isCompleted, String when) {
+        super(description, isCompleted);
         this.when = when;
+    }
+
+    @Override
+    public String fileString() {
+        return "E|" + this.isCompleted + "|" + this.description + "|" + this.when + "\n";
     }
 
     @Override
