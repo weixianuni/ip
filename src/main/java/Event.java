@@ -9,7 +9,7 @@ public class Event extends Task {
 
     @Override
     public String fileString() {
-        return "T|" + this.isCompleted + "|" + this.description + "|" + this.when + "\n";
+        return "E|" + this.isCompleted + "|" + this.description + "|" + this.when + "\n";
     }
 
     @Override
