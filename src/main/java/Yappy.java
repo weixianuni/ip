@@ -65,7 +65,7 @@ public class Yappy {
     public static void readInput(String inputLine) throws YappyException {
         if (inputLine.equals("list")) {
             String[] messages = new String[TASKS.size() + 1];
-            messages[0] = "\t\sHere are the TASKS in your list:";
+            messages[0] = "\t\sHere are the tasks in your list:";
             for (int i = 0; i < TASKS.size(); i++) {
                 int num = i + 1;
                 Task task = TASKS.get(i);
@@ -74,7 +74,7 @@ public class Yappy {
             printFormat(messages);
         } else if (inputLine.startsWith("mark")) {
             if (!inputLine.trim().contains(" ")) {
-                throw new YappyException("Please specify the index of the task you wish to mark as completed!");
+                throw new YappyException("Please specify the index of the task!");
             } else if (Integer.parseInt(inputLine.split(" ")[1]) - 1 > TASKS.size()) {
                 throw new YappyException("Please specify a valid task index.\n\t\sNow you have "
                         + TASKS.size() + (TASKS.size()==1 ? " task ": " TASKS ") + "in the list.");
@@ -86,7 +86,10 @@ public class Yappy {
 
         } else if (inputLine.startsWith("unmark")) {
             if (!inputLine.trim().contains(" ")) {
-                throw new YappyException("Please specify the index of the task you wish to mark as uncompleted!");
+                throw new YappyException("Please specify the index of the task!");
+            } else if (Integer.parseInt(inputLine.split(" ")[1]) - 1 > TASKS.size()) {
+                throw new YappyException("Please specify a valid task index.\n\t\sNow you have "
+                        + TASKS.size() + (TASKS.size()==1 ? " task ": " TASKS ") + "in the list.");
             }
             int index = Integer.parseInt(inputLine.split(" ")[1]) - 1;
             TASKS.get(index).setUncompleted();
@@ -96,12 +99,15 @@ public class Yappy {
         } else if (inputLine.startsWith("delete")) {
             if (!inputLine.trim().contains(" ")) {
                 throw new YappyException("Please specify the index of the task you wish to delete");
+            } else if (Integer.parseInt(inputLine.split(" ")[1]) - 1 > TASKS.size()) {
+                throw new YappyException("Please specify a valid task index.\n\t\sNow you have "
+                        + TASKS.size() + (TASKS.size()==1 ? " task ": " tasks ") + "in the list.");
             }
             int index = Integer.parseInt(inputLine.split(" ")[1]) - 1;
-            TASKS.remove(index);
+            Task removedTask = TASKS.remove(index);
             printFormat(new String[]{"\t\sAlrighty I have removed the following task:"
-                    + "\n\t\s\s" + TASKS.get(index).toString(), "\t\sNow you have "
-                    + TASKS.size() + (TASKS.size()==1 ? " task ": " TASKS ") + "in the list."});
+                    + "\n\t\s\s" + removedTask.toString(), "\t\sNow you have "
+                    + TASKS.size() + (TASKS.size()==1 ? " task ": " tasks ") + "in the list."});
         } else {
             if (inputLine.startsWith("todo")) {
                 if (!inputLine.trim().contains(" ")) {
@@ -127,7 +133,7 @@ public class Yappy {
                 throw new YappyException("Sorry!! I do not know what that command is.");
             }
 
-            printFormat(new String[]{"\t\sAdded the following task:\n\t\s\s\s" + TASKS.getLast().toString(),
+            printFormat(new String[]{"\t\sAdded the following task:\n\t\s\s\s" + TASKS.get(TASKS.size() - 1).toString(),
                     "\t\sNow you have " + TASKS.size() + (TASKS.size() == 1 ? " task ": " tasks ") + "in the list."});
         }
     }
