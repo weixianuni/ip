@@ -1,22 +1,37 @@
 public class Task {
-    String completed;
+    boolean isCompleted;
     String description;
 
 
-    public Task(String description) {
+
+    public Task(String description, Boolean isCompleted) {
         this.description = description;
-        this.completed = " ";
+        this.isCompleted = isCompleted;
     }
 
+    /**
+     *
+     */
     public void setCompleted() {
-        this.completed = "X";
+        this.isCompleted = true;
     }
 
+    /**
+     *
+     */
     public void setUncompleted() {
-        this.completed = " ";
+        this.isCompleted = false;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String fileString() {
+        return "";
     }
 
     public String toString() {
-        return "[" + this.completed + "] " + this.description;
+        return "[" + (this.isCompleted ? "X" : " ") + "] " + this.description;
     }
 }
