@@ -36,7 +36,8 @@
 	 Now you have 2 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
-	 Oh no! You have selected an invalid index.
+	 Please specify a valid task index.
+	 Now you have 2 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
