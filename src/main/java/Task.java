@@ -1,8 +1,9 @@
+/**
+ *
+ */
 public class Task {
     boolean isCompleted;
     String description;
-
-
 
     public Task(String description, Boolean isCompleted) {
         this.description = description;
