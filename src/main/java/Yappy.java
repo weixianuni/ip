@@ -1,6 +1,7 @@
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,10 +35,10 @@ public class Yappy {
             TASKS.add(new ToDo(params[2], Boolean.parseBoolean(params[1])));
             break;
         case "E":
-            TASKS.add(new Event(params[2], Boolean.parseBoolean(params[1]), params[3]));
+            TASKS.add(new Event(params[2], Boolean.parseBoolean(params[1]), LocalDate.parse(params[3]), LocalDate.parse(params[4])));
             break;
         case "D":
-            TASKS.add(new Deadline(params[2], Boolean.parseBoolean(params[1]), params[3]));
+            TASKS.add(new Deadline(params[2], Boolean.parseBoolean(params[1]), LocalDate.parse(params[3])));
             break;
         default:
             throw new YappyException("Incorrect format in Yappy.txt file!");
@@ -106,7 +107,7 @@ public class Yappy {
             int index = Integer.parseInt(inputLine.split(" ")[1]) - 1;
             Task removedTask = TASKS.remove(index);
             printFormat(new String[]{"\t\sAlrighty I have removed the following task:"
-                    + "\n\t\s\s" + removedTask.toString(), "\t\sNow you have "
+                    + "\n\t\s\s\s" + removedTask.toString(), "\t\sNow you have "
                     + TASKS.size() + (TASKS.size()==1 ? " task ": " tasks ") + "in the list."});
         } else {
             if (inputLine.startsWith("todo")) {
@@ -114,21 +115,24 @@ public class Yappy {
                     throw new YappyException("Please specify the todo task!");
                 }
                 String description = inputLine.substring("todo".length()).trim();
-                TASKS.add(TASKS.size(), new ToDo(description, false));
+                TASKS.add(new ToDo(description, false));
             } else if (inputLine.startsWith("event")) {
                 if (!inputLine.trim().contains(" ")) {
                     throw new YappyException("Please specify the event task and time specifications!");
                 }
                 String description = inputLine.substring("event".length()).trim().split("/from")[0];
-                String when = inputLine.split("/from")[1];
-                TASKS.add(TASKS.size(), new Event(description, false, when));
+                String fromAndTo = inputLine.split("/from")[1];
+                LocalDate from = LocalDate.parse(fromAndTo.split("/to")[0].strip());
+                LocalDate to = LocalDate.parse(fromAndTo.split("/to")[1].strip());
+
+                TASKS.add(new Event(description, false, from, to));
             } else if (inputLine.startsWith("deadline")) {
                 if (!inputLine.trim().contains(" ")) {
                     throw new YappyException("Please specify the deadline task and deadline!");
                 }
                 String description = inputLine.substring("deadline".length()).trim().split("/by")[0].strip();
-                String by = inputLine.split("/by")[1].strip();
-                TASKS.add(TASKS.size(), new Deadline(description, false, by));
+                LocalDate by = LocalDate.parse(inputLine.split("/by")[1].strip());
+                TASKS.add(new Deadline(description, false, by));
             } else {
                 throw new YappyException("Sorry!! I do not know what that command is.");
             }
@@ -141,7 +145,7 @@ public class Yappy {
 
 
     public static void main(String[] args){
-    
+
         TASKS = new ArrayList<>();
         File file = storagePath.toFile();
         try {
