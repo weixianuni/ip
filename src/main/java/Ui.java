@@ -40,9 +40,15 @@ public class Ui {
      *
      */
     public void showWelcome() {
-        System.out.println("\t Hello! I'm Yappy\n\t What can I do for you?");
+        System.out.println("\t Hello, I'm Yappy!\n\t What can I do for you?");
     }
 
+    /**
+     *
+     */
+    public void showWelcomeBack() {
+        System.out.println("\t Hello, welcome Back!\n\t What can I do for you?");
+    }
     /**
      *
      */
@@ -59,6 +65,9 @@ public class Ui {
     }
 
     public void showTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println("\t You currently do not have any tasks");
+        }
         for (int i = 0; i < tasks.size(); i++) {
             int index = i + 1;
             System.out.println("\t " + index + "." + tasks.get(i).toString());

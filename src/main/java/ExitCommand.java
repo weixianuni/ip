@@ -2,7 +2,7 @@ public class ExitCommand extends Command {
 
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws YappyException {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             storage.save(tasks.getTasks());
         } catch (YappyException e) {

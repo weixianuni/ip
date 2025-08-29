@@ -1,14 +1,16 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Storage {
 
-    File file;
+    private File file;
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
 
     /**
      *
@@ -24,7 +26,32 @@ public class Storage {
      * @throws YappyException
      */
     public ArrayList<Task> loadTask() throws YappyException{
-        return new ArrayList<>();
+        try {
+            ArrayList<Task> tasks = new ArrayList<>();
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (!line.trim().isEmpty()) {
+                    String[] params = line.split("\\|");
+                    switch (params[0]) {
+                    case "T":
+                        tasks.add(new ToDo(params[2], Boolean.parseBoolean(params[1])));
+                        break;
+                    case "E":
+                        tasks.add(new Event(params[2], Boolean.parseBoolean(params[1]), LocalDateTime.parse(params[3], FORMATTER), LocalDateTime.parse(params[4], FORMATTER)));
+                        break;
+                    case "D":
+                        tasks.add(new Deadline(params[2], Boolean.parseBoolean(params[1]), LocalDateTime.parse(params[3], FORMATTER)));
+                        break;
+                    default:
+                        throw new YappyException("Incorrect format in Yappy.txt file!");
+                    }
+                }
+            }
+            return tasks;
+        } catch (FileNotFoundException e) {
+            throw new YappyException("File not found");
+        }
     }
 
     /**

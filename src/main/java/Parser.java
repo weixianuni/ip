@@ -12,37 +12,39 @@ public class Parser {
      * @throws YappyException
      */
     public static Command parse(String command) throws YappyException {
-        if (command.equals("list")) {
+        if (command.equals("bye")) {
+            return new ExitCommand();
+        } else if (command.equals("list")) {
             return new ListCommand();
         } else if (command.startsWith("mark")) {
             if (!command.trim().contains(" ")) {
-                throw new YappyException("Please specify the index of the task!");
+                throw new YappyException("\t Please specify the index of the task to mark as completed!");
             } else {
                 return new MarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
             }
         } else if (command.startsWith("unmark")) {
             if (!command.trim().contains(" ")) {
-                throw new YappyException("Please specify the index of the task!");
+                throw new YappyException("\t Please specify the index of the task you wish to mark as uncompleted!");
             } else {
                 return new UnmarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
             }
         } else if (command.startsWith("delete")) {
             if (!command.trim().contains(" ")) {
-                throw new YappyException("Please specify the index of the task you wish to delete");
+                throw new YappyException("\t Please specify the index of the task you wish to delete!");
             } else {
                 return new DeleteCommand(Integer.parseInt(command.split(" ")[1]) - 1);
             }
         } else {
             if (command.startsWith("todo")) {
                 if (!command.trim().contains(" ")) {
-                    throw new YappyException("Please specify the todo task!");
+                    throw new YappyException("\t Please specify the todo task!");
                 } else {
                     String description = command.substring("todo".length()).trim().split("/from")[0];
                     return new AddCommand(new ToDo(description, false));
                 }
             } else if (command.startsWith("event")) {
                 if (!command.trim().contains(" ")) {
-                    throw new YappyException("Please specify the event task and time specifications!");
+                    throw new YappyException("\t Please specify the event task and start and end dates!");
                 } else {
                     String description = command.substring("event".length()).trim().split("/from")[0];
                     String fromAndTo = command.split("/from")[1];
@@ -52,14 +54,14 @@ public class Parser {
                 }
             } else if (command.startsWith("deadline")) {
                 if (!command.trim().contains(" ")) {
-                    throw new YappyException("Please specify the deadline task and deadline!");
+                    throw new YappyException("\t Please specify the deadline task and deadline!");
                 } else {
                     String description = command.substring("deadline".length()).trim().split("/by")[0].strip();
                     LocalDateTime by = LocalDateTime.parse(command.split("/by")[1].strip(), FORMATTER);
                     return new AddCommand(new Deadline(description, false, by));
                 }
             } else {
-                throw new YappyException("Sorry!! I do not know what that command is.");
+                throw new YappyException("\t Sorry!! I do not know what that command is.");
             }
         }
     }

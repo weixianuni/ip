@@ -33,8 +33,12 @@ public class TaskList {
      * @param index
      * @return
      */
-    public Task delete(int index) {
-        return this.tasks.remove(index);
+    public Task delete(int index) throws YappyException {
+        try {
+            return this.tasks.remove(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new YappyException("Index out of Bounds.");
+        }
     }
 
     /**
@@ -42,10 +46,14 @@ public class TaskList {
      * @param index
      * @return
      */
-    public Task mark(int index) {
-        Task task = this.tasks.get(index);
-        task.setCompleted();
-        return task;
+    public Task mark(int index) throws YappyException {
+        try {
+            Task task = this.tasks.get(index);
+            task.setCompleted();
+            return task;
+        } catch (IndexOutOfBoundsException e) {
+            throw new YappyException("Index out of bounds");
+        }
     }
 
     /**
@@ -53,10 +61,14 @@ public class TaskList {
      * @param index
      * @return
      */
-    public Task unmark(int index) {
-        Task task = this.tasks.get(index);
-        task.setUncompleted();
-        return task;
+    public Task unmark(int index) throws YappyException {
+        try {
+            Task task = this.tasks.get(index);
+            task.setUncompleted();
+            return task;
+        } catch (IndexOutOfBoundsException e) {
+            throw new YappyException("Index out of bounds");
+        }
     }
 
     public ArrayList<Task> getTasks() {

@@ -11,8 +11,8 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws YappyException {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.add(task);
-        ui.showMessage("\t Alrighty I have removed the following task:\n\t   " + this.task.toString());
+        ui.showMessage("\t Alrighty I have added the following task:\n\t   " + this.task.toString());
     }
 }

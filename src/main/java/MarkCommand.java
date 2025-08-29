@@ -13,6 +13,6 @@ public class MarkCommand extends Command{
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws YappyException {
         Task markedTask = tasks.mark(index);
-        ui.showMessage("\t Alrighty I have marked this task as completed:\n\t  " + markedTask.toString());
+        ui.showMessage("\t Alrighty I have marked this task as completed:\n\t   " + markedTask.toString());
     }
 }
