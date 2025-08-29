@@ -1,4 +1,10 @@
-import java.nio.file.Path;
+package duke.ui;
+
+import duke.backend.Storage;
+import duke.backend.TaskList;
+import duke.command.Command;
+import duke.exception.YappyException;
+
 import java.nio.file.Paths;
 
 public class Yappy {
@@ -48,8 +54,9 @@ public class Yappy {
                 ui.showLine();
             }
         }
-
+        ui.showLine();
         ui.showGoodbye();
+        ui.showLine();
     }
 
 

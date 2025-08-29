@@ -1,42 +1,42 @@
 	____________________________________________________________
-	 Hello! I'm Yappy
+	 Hello! I'm duke.ui.Yappy
 	 What can I do for you?
 	____________________________________________________________
 	____________________________________________________________
-	 Added the following task:
+	 Added the following duke.task:
 	   [T][ ] borrow book
-	 Now you have 1 task in the list.
+	 Now you have 1 duke.task in the list.
 	____________________________________________________________
 	____________________________________________________________
 	 Here are the tasks in your list:
 	 1.[T][ ] borrow book
 	____________________________________________________________
 	____________________________________________________________
-	 Added the following task:
+	 Added the following duke.task:
 	   [D][ ] return book (by: Sep 1 2025)
 	 Now you have 2 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
-	 Added the following task:
+	 Added the following duke.task:
 	   [E][ ] project meeting (from: Aug 28 2025 to: Aug 29 2025)
 	 Now you have 3 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
-	 Please specify the todo task!
+	 Please specify the todo duke.task!
 	____________________________________________________________
 	____________________________________________________________
-	 Please specify the event task and time specifications!
+	 Please specify the event duke.task and time specifications!
 	____________________________________________________________
 	____________________________________________________________
-	 Please specify the index of the task!
+	 Please specify the index of the duke.task!
 	____________________________________________________________
 	____________________________________________________________
-	 Alrighty I have removed the following task:
+	 Alrighty I have removed the following duke.task:
 	   [E][ ] project meeting (from: Aug 28 2025 to: Aug 29 2025)
 	 Now you have 2 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
-	 Please specify a valid task index.
+	 Please specify a valid duke.task index.
 	 Now you have 2 tasks in the list.
 	____________________________________________________________
 	____________________________________________________________
