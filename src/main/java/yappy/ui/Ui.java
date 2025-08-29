@@ -44,14 +44,14 @@ public class Ui {
      *
      */
     public void showWelcome() {
-        System.out.println("\t Hello, I'm duke.ui.Yappy!\n\t What can I do for you?");
+        System.out.println("\t Hello, I'm Yappy!\n\t What can I do for you?");
     }
 
     /**
      *
      */
     public void showWelcomeBack() {
-        System.out.println("\t Hello, welcome Back!\n\t What can I do for you?");
+        System.out.println("\t Hello, welcome back!\n\t What can I do for you?");
     }
     /**
      *
