@@ -1,5 +1,12 @@
+package duke.backend;
+
+import duke.exception.YappyException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -44,7 +51,7 @@ public class Storage {
                         tasks.add(new Deadline(params[2], Boolean.parseBoolean(params[1]), LocalDateTime.parse(params[3], FORMATTER)));
                         break;
                     default:
-                        throw new YappyException("Incorrect format in Yappy.txt file!");
+                        throw new YappyException("Incorrect format in duke.ui.Yappy.txt file!");
                     }
                 }
             }

@@ -1,4 +1,8 @@
-import java.lang.reflect.Array;
+package duke.ui;
+
+import duke.exception.YappyException;
+import duke.task.Task;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,7 +22,7 @@ public class Ui {
      * @return
      * @throws YappyException
      */
-    public String readCommand() throws YappyException{
+    public String readCommand() throws YappyException {
         return input.nextLine();
     }
 
@@ -40,7 +44,7 @@ public class Ui {
      *
      */
     public void showWelcome() {
-        System.out.println("\t Hello, I'm Yappy!\n\t What can I do for you?");
+        System.out.println("\t Hello, I'm duke.ui.Yappy!\n\t What can I do for you?");
     }
 
     /**
