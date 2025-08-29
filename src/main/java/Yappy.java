@@ -1,8 +1,12 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Yappy {
 
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
+
 
     /**
      * Initialise storage, tasks and ui
@@ -51,7 +55,10 @@ public class Yappy {
 
     public static void main(String[] args){
 
-        new Yappy("/src/main/data/Yappy.txt").run();
+        String storagePath = Paths.get("src/main/data", "Yappy.txt").toString();
+
+
+        new Yappy(storagePath).run();
 
     }
 }

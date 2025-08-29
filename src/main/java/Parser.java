@@ -20,19 +20,32 @@ public class Parser {
             if (!command.trim().contains(" ")) {
                 throw new YappyException("\t Please specify the index of the task to mark as completed!");
             } else {
-                return new MarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
+                try {
+                    return new MarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
+                } catch (NumberFormatException e) {
+                    throw new YappyException("\t Please input an integer index!");
+                }
             }
         } else if (command.startsWith("unmark")) {
             if (!command.trim().contains(" ")) {
                 throw new YappyException("\t Please specify the index of the task you wish to mark as uncompleted!");
             } else {
-                return new UnmarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
+                try {
+                    return new UnmarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
+                } catch (NumberFormatException e) {
+                throw new YappyException("\t Please input an integer index!");
+                }
             }
         } else if (command.startsWith("delete")) {
             if (!command.trim().contains(" ")) {
                 throw new YappyException("\t Please specify the index of the task you wish to delete!");
             } else {
-                return new DeleteCommand(Integer.parseInt(command.split(" ")[1]) - 1);
+                try {
+                    return new DeleteCommand(Integer.parseInt(command.split(" ")[1]) - 1);
+                } catch (NumberFormatException e) {
+                    throw new YappyException("\t Please input an integer index!");
+                }
+
             }
         } else {
             if (command.startsWith("todo")) {
