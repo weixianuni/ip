@@ -28,7 +28,7 @@ test {
 }
 
 application {
-    mainClass.set("duke.ui.Yappy")
+    mainClass.set("yappy.ui.Yappy")
 }
 
 shadowJar {
