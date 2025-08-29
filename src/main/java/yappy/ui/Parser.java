@@ -1,10 +1,10 @@
-package duke.ui;
+package yappy.ui;
 
-import duke.command.*;
-import duke.exception.YappyException;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.ToDo;
+import yappy.command.*;
+import yappy.exception.YappyException;
+import yappy.task.Deadline;
+import yappy.task.Event;
+import yappy.task.ToDo;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

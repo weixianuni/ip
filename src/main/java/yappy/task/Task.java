@@ -1,4 +1,4 @@
-package duke.task;
+package yappy.task;
 
 /**
  *
@@ -36,5 +36,13 @@ public class Task {
 
     public String toString() {
         return "[" + (this.isCompleted ? "X" : " ") + "] " + this.description;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public Boolean completed() {
+        return this.isCompleted;
     }
 }

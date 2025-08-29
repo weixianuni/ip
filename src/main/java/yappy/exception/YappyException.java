@@ -1,4 +1,4 @@
-package duke.exception;
+package yappy.exception;
 
 public class YappyException extends Exception {
 
