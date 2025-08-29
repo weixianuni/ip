@@ -1,4 +1,4 @@
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -6,10 +6,12 @@ import java.time.format.DateTimeFormatter;
  */
 public class Event extends Task {
 
-    LocalDate from;
-    LocalDate to;
+    LocalDateTime from;
+    LocalDateTime to;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-    public Event(String description, Boolean isCompleted, LocalDate from, LocalDate to) {
+
+    public Event(String description, Boolean isCompleted, LocalDateTime from, LocalDateTime to) {
         super(description, isCompleted);
         this.from = from;
         this.to = to;
@@ -17,12 +19,12 @@ public class Event extends Task {
 
     @Override
     public String fileString() {
-        return "E|" + this.isCompleted + "|" + this.description + "|" + this.from + "|" + this.to + "\n";
+        return "E|" + this.isCompleted + "|" + this.description + "|" + this.from.format(formatter) + "|" + this.to.format(formatter) + "\n";
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + from.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + " to: " + to.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+        return "[E]" + super.toString() + "(from: " + from.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + " to: " + to.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
     }
 }
 
