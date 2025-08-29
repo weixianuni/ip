@@ -1,9 +1,9 @@
-package duke.command;
+package yappy.command;
 
-import duke.backend.Storage;
-import duke.backend.TaskList;
-import duke.task.Task;
-import duke.ui.Ui;
+import yappy.backend.Storage;
+import yappy.backend.TaskList;
+import yappy.task.Task;
+import yappy.ui.Ui;
 
 public class AddCommand extends Command {
 

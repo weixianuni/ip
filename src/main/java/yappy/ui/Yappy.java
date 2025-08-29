@@ -1,9 +1,9 @@
-package duke.ui;
+package yappy.ui;
 
-import duke.backend.Storage;
-import duke.backend.TaskList;
-import duke.command.Command;
-import duke.exception.YappyException;
+import yappy.backend.Storage;
+import yappy.backend.TaskList;
+import yappy.command.Command;
+import yappy.exception.YappyException;
 
 import java.nio.file.Paths;
 

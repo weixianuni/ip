@@ -1,9 +1,9 @@
-package duke.command;
+package yappy.command;
 
-import duke.backend.Storage;
-import duke.backend.TaskList;
-import duke.exception.YappyException;
-import duke.ui.Ui;
+import yappy.backend.Storage;
+import yappy.backend.TaskList;
+import yappy.exception.YappyException;
+import yappy.ui.Ui;
 
 public class ExitCommand extends Command {
 

@@ -1,10 +1,10 @@
-package duke.backend;
+package yappy.backend;
 
-import duke.exception.YappyException;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.ToDo;
+import yappy.exception.YappyException;
+import yappy.task.Deadline;
+import yappy.task.Event;
+import yappy.task.Task;
+import yappy.task.ToDo;
 
 import java.io.*;
 import java.nio.file.Paths;
