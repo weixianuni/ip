@@ -3,9 +3,14 @@ import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
-    private static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-
+    /**
+     *
+     * @param command
+     * @return
+     * @throws YappyException
+     */
     public static Command parse(String command) throws YappyException {
         if (command.equals("list")) {
             return new ListCommand();
