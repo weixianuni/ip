@@ -1,28 +1,65 @@
+import java.sql.Array;
+import java.util.ArrayList;
+
 public class TaskList {
 
-    Task[] tasks;
+    ArrayList<Task> tasks;
 
+    /**
+     *
+     */
     public TaskList() {
-        this.tasks = new Task[]{};
+        this.tasks = new ArrayList<>();
     }
 
-    public TaskList(Task[] tasks) {
+    /**
+     *
+     * @param tasks
+     */
+    public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public void add(Task task) {
-
-    }
-
-    public void delete(Task task) {
-
-    }
-
-    /*
-    public void mark(int index) {
-
-    }
-
+    /**
+     *
+     * @param task
      */
+    public void add(Task task) {
+        this.tasks.add(task);
+    }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
+    public Task delete(int index) {
+        return this.tasks.remove(index);
+    }
+
+    /**
+     *
+     * @param index
+     * @return
+     */
+    public Task mark(int index) {
+        Task task = this.tasks.get(index);
+        task.setCompleted();
+        return task;
+    }
+
+    /**
+     *
+     * @param index
+     * @return
+     */
+    public Task unmark(int index) {
+        Task task = this.tasks.get(index);
+        task.setUncompleted();
+        return task;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return new ArrayList<>(this.tasks);
+    }
 }
