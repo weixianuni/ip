@@ -1,15 +1,20 @@
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+
+
 
 
 public class Yappy {
 
     static ArrayList<Task> TASKS;
     static Path storagePath = Paths.get("src/main/data", "Yappy.txt");
+    static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
 
     /**
      *
@@ -35,10 +40,10 @@ public class Yappy {
             TASKS.add(new ToDo(params[2], Boolean.parseBoolean(params[1])));
             break;
         case "E":
-            TASKS.add(new Event(params[2], Boolean.parseBoolean(params[1]), LocalDate.parse(params[3]), LocalDate.parse(params[4])));
+            TASKS.add(new Event(params[2], Boolean.parseBoolean(params[1]), LocalDateTime.parse(params[3], FORMATTER), LocalDateTime.parse(params[4], FORMATTER)));
             break;
         case "D":
-            TASKS.add(new Deadline(params[2], Boolean.parseBoolean(params[1]), LocalDate.parse(params[3])));
+            TASKS.add(new Deadline(params[2], Boolean.parseBoolean(params[1]), LocalDateTime.parse(params[3], FORMATTER)));
             break;
         default:
             throw new YappyException("Incorrect format in Yappy.txt file!");
@@ -65,14 +70,18 @@ public class Yappy {
      */
     public static void readInput(String inputLine) throws YappyException {
         if (inputLine.equals("list")) {
-            String[] messages = new String[TASKS.size() + 1];
-            messages[0] = "\t\sHere are the tasks in your list:";
-            for (int i = 0; i < TASKS.size(); i++) {
-                int num = i + 1;
-                Task task = TASKS.get(i);
-                messages[num] = "\t\s" + num + "." + task.toString();
+            if (TASKS.isEmpty()) {
+                printFormat(new String[]{"\t\sYou currently have no tasks in your list"});
+            } else {
+                String[] messages = new String[TASKS.size() + 1];
+                messages[0] = "\t\sHere are the tasks in your list:";
+                for (int i = 0; i < TASKS.size(); i++) {
+                    int num = i + 1;
+                    Task task = TASKS.get(i);
+                    messages[num] = "\t\s" + num + "." + task.toString();
+                }
+                printFormat(messages);
             }
-            printFormat(messages);
         } else if (inputLine.startsWith("mark")) {
             if (!inputLine.trim().contains(" ")) {
                 throw new YappyException("Please specify the index of the task!");
@@ -122,8 +131,8 @@ public class Yappy {
                 }
                 String description = inputLine.substring("event".length()).trim().split("/from")[0];
                 String fromAndTo = inputLine.split("/from")[1];
-                LocalDate from = LocalDate.parse(fromAndTo.split("/to")[0].strip());
-                LocalDate to = LocalDate.parse(fromAndTo.split("/to")[1].strip());
+                LocalDateTime from = LocalDateTime.parse(fromAndTo.split("/to")[0].strip(), FORMATTER);
+                LocalDateTime to = LocalDateTime.parse(fromAndTo.split("/to")[1].strip(), FORMATTER);
 
                 TASKS.add(new Event(description, false, from, to));
             } else if (inputLine.startsWith("deadline")) {
@@ -131,7 +140,7 @@ public class Yappy {
                     throw new YappyException("Please specify the deadline task and deadline!");
                 }
                 String description = inputLine.substring("deadline".length()).trim().split("/by")[0].strip();
-                LocalDate by = LocalDate.parse(inputLine.split("/by")[1].strip());
+                LocalDateTime by = LocalDateTime.parse(inputLine.split("/by")[1].strip(), FORMATTER);
                 TASKS.add(new Deadline(description, false, by));
             } else {
                 throw new YappyException("Sorry!! I do not know what that command is.");
