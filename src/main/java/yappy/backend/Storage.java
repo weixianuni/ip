@@ -78,7 +78,7 @@ public class Storage {
             BufferedWriter bfw = new BufferedWriter(fw);
 
             for (Task task : tasks) {
-                bfw.write(task.fileString());
+                bfw.write(task.toFileString());
             }
             bfw.close();
         } catch (IOException e) {
