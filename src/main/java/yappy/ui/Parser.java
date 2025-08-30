@@ -9,15 +9,30 @@ import yappy.task.ToDo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The <code>Parser</code> class is responsible for parsing raw user input
+ * strings and converting them into <code>Command</code> objects.
+ *
+ * If the input does not match any known command format,
+ * a {@link YappyException} is thrown.</p>
+ *
+ * <p>This class also validates the correctness of user input
+ * (e.g., checking that an index is provided where required, or that
+ * dates follow the expected format).</p>
+ */
 public class Parser {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     /**
+     * Parses the given raw input string and returns the corresponding <code>Command</code>
+     * object that can be executed by the application.
      *
-     * @param command
-     * @return
-     * @throws YappyException
+     * <p>Date/time inputs must follow the format <code>yyyy-MM-dd HH:mm</code>.</p>
+     *
+     * @param command The raw user input string.
+     * @return The <code>Command</code> corresponding to the parsed input.
+     * @throws YappyException If the input is invalid or does not match a known command.
      */
     public static Command parse(String command) throws YappyException {
         if (command.equals("bye")) {
