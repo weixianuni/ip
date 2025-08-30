@@ -5,12 +5,18 @@ import yappy.backend.TaskList;
 import yappy.task.Task;
 import yappy.ui.Ui;
 
+/**
+ * Represents a command to add tasks into the TaskList.
+ * An <code>AddCommand</code> object has a Task field representing the task to be added.
+ *
+ */
 public class AddCommand extends Command {
 
     private Task task;
 
     /**
-     *
+     * Constructs a new {@code AddCommand} object with the specified Task.
+     * This constructor initializes the AddCommand's Task.
      * @param task
      */
     public AddCommand(Task task) {

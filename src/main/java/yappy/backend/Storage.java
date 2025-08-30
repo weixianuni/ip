@@ -13,6 +13,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Represent the storage manager for Yappy. A <code>Storage</code> object corresponds to
+ * a storage with a file path and formatter
+ */
 public class Storage {
 
     private File file;
@@ -28,9 +32,10 @@ public class Storage {
     }
 
     /**
+     * Returns an ArrayList of the tasks that have been read from disk
      *
-     * @return
-     * @throws YappyException
+     * @return Tasks saved to disk from previous interaction
+     * @throws YappyException If format is incorrect
      */
     public ArrayList<Task> loadTask() throws YappyException{
         try {
@@ -51,7 +56,7 @@ public class Storage {
                         tasks.add(new Deadline(params[2], Boolean.parseBoolean(params[1]), LocalDateTime.parse(params[3], FORMATTER)));
                         break;
                     default:
-                        throw new YappyException("Incorrect format in duke.ui.Yappy.txt file!");
+                        throw new YappyException("Incorrect format in Yappy.txt file!");
                     }
                 }
             }

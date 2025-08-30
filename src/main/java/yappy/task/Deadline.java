@@ -4,12 +4,25 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * Represents a <code>Deadline</code> task which is a type of <code>Task</code>.
+ * A <code>Deadline</code> requires a description, a completion status and the date of the deadline.
  *
+ * <p>This class extends the <code>Task</code> class and overrides methods
+ * for file storage and string representation.</p>
  */
 public class Deadline extends Task {
     LocalDateTime by;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    /**
+     * Constructs a new {@code Deadline} task with the given description,
+     * completion status and by date.
+     *
+     * @param description Textual description of the task.
+     * @param isCompleted {@code true} if the task has been completed,
+     *                    {@code false} otherwise.
+     * @param by Deadline of the task.
+     */
     public Deadline(String description, Boolean isCompleted, LocalDateTime by) {
         super(description, isCompleted);
         this.by = by;
@@ -25,6 +38,11 @@ public class Deadline extends Task {
         return "[D]" + super.toString() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
     }
 
+    /**
+     * Returns the deadline of the event.
+     *
+     * @return
+     */
     public LocalDateTime getByDate() {
         return this.by;
     }
