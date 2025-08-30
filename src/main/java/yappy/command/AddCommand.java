@@ -7,7 +7,7 @@ import yappy.ui.Ui;
 
 /**
  * Represents a command to add tasks into the TaskList.
- * An <code>AddCommand</code> object has a Task field representing the task to be added
+ * An <code>AddCommand</code> object has a Task field representing the task to be added.
  *
  */
 public class AddCommand extends Command {
