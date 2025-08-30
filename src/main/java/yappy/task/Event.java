@@ -34,7 +34,7 @@ public class Event extends Task {
     }
 
     @Override
-    public String fileString() {
+    public String toFileString() {
         return "E|" + this.isCompleted + "|" + this.description + "|" + this.from.format(formatter) + "|" + this.to.format(formatter) + "\n";
     }
 

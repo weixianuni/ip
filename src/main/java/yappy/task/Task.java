@@ -35,7 +35,7 @@ public class Task {
      *
      * @return An empty string
      */
-    public String fileString() {
+    public String toFileString() {
         return "";
     }
 
