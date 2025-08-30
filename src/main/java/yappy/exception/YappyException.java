@@ -1,7 +1,7 @@
 package yappy.exception;
 
 /**
- *
+ * Represents a Yappy exception to be thrown when running the Yappy program
  */
 public class YappyException extends Exception {
 
