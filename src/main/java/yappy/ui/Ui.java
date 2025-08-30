@@ -86,9 +86,6 @@ public class Ui {
      * @param tasks The Arraylist of tasks to be displayed
      */
     public void showTasks(ArrayList<Task> tasks) {
-        if (tasks.isEmpty()) {
-            System.out.println("\t You currently do not have any tasks");
-        }
         for (int i = 0; i < tasks.size(); i++) {
             int index = i + 1;
             System.out.println("\t " + index + "." + tasks.get(i).toString());

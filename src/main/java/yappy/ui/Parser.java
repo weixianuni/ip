@@ -39,6 +39,12 @@ public class Parser {
             return new ExitCommand();
         } else if (command.equals("list")) {
             return new ListCommand();
+        }  else if (command.startsWith("find")) {
+            if (!command.trim().contains(" ")) {
+                throw new YappyException("\t Please specify the query string!");
+            } else {
+                return new FindCommand(command.split(" ")[1]);
+            }
         } else if (command.startsWith("mark")) {
             if (!command.trim().contains(" ")) {
                 throw new YappyException("\t Please specify the index of the task to mark as completed!");
@@ -68,7 +74,6 @@ public class Parser {
                 } catch (NumberFormatException e) {
                     throw new YappyException("\t Please input an integer index!");
                 }
-
             }
         } else {
             if (command.startsWith("todo")) {
