@@ -51,7 +51,7 @@ public class FindCommand extends Command {
         if (filteredList.isEmpty()) {
             ui.showMessage("\t No matching task description!");
         } else {
-            ui.showMessage("Here are the matching tasks in your list:");
+            ui.showMessage("\t Here are the matching tasks in your list:");
             ui.showTasks(filteredList);
         }
 
