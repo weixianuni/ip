@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Ui {
 
-    Scanner input;
+    private Scanner input;
 
     /**
      * Constructs a new <code>Ui</code> instance with a <code>Scanner</code>

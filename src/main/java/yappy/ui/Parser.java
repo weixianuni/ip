@@ -39,7 +39,7 @@ public class Parser {
             return new ExitCommand();
         } else if (command.equals("list")) {
             return new ListCommand();
-        }  else if (command.startsWith("find")) {
+        } else if (command.startsWith("find")) {
             if (!command.trim().contains(" ")) {
                 throw new YappyException("\t Please specify the query string!");
             } else {
@@ -62,7 +62,7 @@ public class Parser {
                 try {
                     return new UnmarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
                 } catch (NumberFormatException e) {
-                throw new YappyException("\t Please input an integer index!");
+                    throw new YappyException("\t Please input an integer index!");
                 }
             }
         } else if (command.startsWith("delete")) {

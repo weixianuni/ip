@@ -11,8 +11,9 @@ import java.time.format.DateTimeFormatter;
  * for file storage and string representation.</p>
  */
 public class Deadline extends Task {
-    LocalDateTime by;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private LocalDateTime by;
 
     /**
      * Constructs a new {@code Deadline} task with the given description,
@@ -30,7 +31,7 @@ public class Deadline extends Task {
 
     @Override
     public String toFileString() {
-        return "D|" + this.isCompleted + "|" + this.description + "|" + this.by.format(formatter) + "\n";
+        return "D|" + this.isCompleted + "|" + this.description + "|" + this.by.format(FORMATTER) + "\n";
     }
 
     @Override
