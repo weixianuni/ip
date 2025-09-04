@@ -13,9 +13,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class Event extends Task {
 
-    LocalDateTime from;
-    LocalDateTime to;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private LocalDateTime from;
+    private LocalDateTime to;
 
     /**
      * Constructs a new {@code Event} task with the given description,
@@ -35,12 +35,15 @@ public class Event extends Task {
 
     @Override
     public String toFileString() {
-        return "E|" + this.isCompleted + "|" + this.description + "|" + this.from.format(formatter) + "|" + this.to.format(formatter) + "\n";
+        return "E|" + this.isCompleted + "|" + this.description + "|"
+                + this.from.format(FORMATTER) + "|" + this.to.format(FORMATTER) + "\n";
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + from.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + " to: " + to.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
+        return "[E]" + super.toString() + "(from: "
+                + from.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"))
+                + " to: " + to.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm")) + ")";
     }
 
     /**

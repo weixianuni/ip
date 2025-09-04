@@ -11,6 +11,12 @@ public class Task {
     boolean isCompleted;
     String description;
 
+    /**
+     * Constructs a new <code>Task</code> task with the given description.
+     * @param description Textual description of the task.
+     * @param isCompleted <code>true</code> if the task has been completed,
+     *                    <code>false</code>> otherwise.
+     */
     public Task(String description, Boolean isCompleted) {
         this.description = description;
         this.isCompleted = isCompleted;
