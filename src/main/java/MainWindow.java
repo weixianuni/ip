@@ -1,4 +1,5 @@
-import javafx.event.ActionEvent;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,7 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
-import javafx.scene.shape.Circle;
+import javafx.util.Duration;
+import yappy.ui.Yappy;
 
 /**
  * Controller for the main GUI.
@@ -22,7 +24,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private Duke duke;
+    private Yappy yappy;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
@@ -33,8 +35,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /** Injects the Duke instance */
-    public void setDuke(Duke d) {
-        duke = d;
+    public void setYappy(Yappy d) {
+        yappy = d;
     }
 
     /**
@@ -43,14 +45,21 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
-        AudioClip clickSound = new AudioClip(getClass().getResource("/sounds/message-envoye-iphone-apple-391098.mp3").toExternalForm());
+        AudioClip clickSound = new AudioClip(getClass().getResource("/sounds/sent.mp3").toExternalForm());
         clickSound.play();
         String input = userInput.getText();
-        String response = duke.getResponse(input);
+
+        String response = yappy.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, dukeImage)
         );
+        System.out.println(response);
         userInput.clear();
+        if (input.equals("bye")) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 second delay
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
+        }
     }
 }

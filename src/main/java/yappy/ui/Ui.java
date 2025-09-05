@@ -85,11 +85,14 @@ public class Ui {
      *
      * @param tasks The Arraylist of tasks to be displayed
      */
-    public void showTasks(ArrayList<Task> tasks) {
+    public String showTasks(ArrayList<Task> tasks) {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             int index = i + 1;
-            System.out.println("\t " + index + "." + tasks.get(i).toString());
+            String next = ("\t " + index + "." + tasks.get(i).toString());
+            sb.append(next);
         }
+        return sb.toString();
     }
 
     /**
