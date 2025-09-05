@@ -20,11 +20,12 @@ public class ExitCommand extends Command {
      * @param storage The storage object that handles storing to and reading from disk.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public String execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             storage.save(tasks.getTasks());
+            return "See you again!";
         } catch (YappyException e) {
-            ui.showError(e.getMessage());
+            return e.getMessage();
         }
     }
 

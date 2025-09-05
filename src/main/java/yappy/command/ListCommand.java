@@ -19,12 +19,11 @@ public class ListCommand extends Command {
      * @throws YappyException
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws YappyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws YappyException {
         if (tasks.getTasks().isEmpty()) {
-            ui.showMessage("You currently do not have any tasks");
+            return ("You currently do not have any tasks");
         } else {
-            ui.showMessage("\t Here are the tasks in your list:");
-            ui.showTasks(tasks.getTasks());
+            return "\t Here are the tasks in your list:" + ui.showTasks(tasks.getTasks());
         }
     }
 }

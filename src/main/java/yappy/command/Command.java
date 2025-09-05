@@ -22,7 +22,7 @@ public abstract class Command {
      * @param storage The storage object that handles storing to and reading from disk.
      * @throws YappyException Exceptions thrown by child classes implementing this method.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws YappyException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws YappyException;
 
     /**
      * Check if the command is the exit command.

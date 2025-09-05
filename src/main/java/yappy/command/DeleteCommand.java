@@ -33,8 +33,8 @@ public class DeleteCommand extends Command {
      * @throws YappyException
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws YappyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws YappyException {
         Task removedTask = tasks.delete(index);
-        ui.showMessage("\t Alrighty I have removed the following task:\n\t   " + removedTask.toString());
+        return ("\t Alrighty I have removed the following task:\n\t   " + removedTask.toString());
     }
 }
