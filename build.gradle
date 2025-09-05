@@ -29,7 +29,7 @@ test {
 }
 
 application {
-    mainClass.set("yappy.ui.Yappy")
+    mainClass.set("Launcher")
 }
 
 shadowJar {
