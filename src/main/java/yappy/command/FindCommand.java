@@ -1,12 +1,12 @@
 package yappy.command;
 
+import java.util.ArrayList;
+
 import yappy.backend.Storage;
 import yappy.backend.TaskList;
 import yappy.exception.YappyException;
 import yappy.task.Task;
 import yappy.ui.Ui;
-
-import java.util.ArrayList;
 
 /**
  * Represents a command to find tasks using a matching substring.
@@ -37,7 +37,7 @@ public class FindCommand extends Command {
      * @throws YappyException
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws YappyException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws YappyException {
 
         ArrayList<Task> filteredList = new ArrayList<>();
 
@@ -49,11 +49,9 @@ public class FindCommand extends Command {
         }
 
         if (filteredList.isEmpty()) {
-            ui.showMessage("\t No matching task description!");
+            return ("\t No matching task description!");
         } else {
-            ui.showMessage("\t Here are the matching tasks in your list:");
-            ui.showTasks(filteredList);
+            return "\t Here are the tasks in your list:" + ui.showTasks(filteredList);
         }
-
     }
 }

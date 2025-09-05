@@ -1,11 +1,12 @@
 package yappy.ui;
 
+import java.nio.file.Paths;
+
 import yappy.backend.Storage;
 import yappy.backend.TaskList;
 import yappy.command.Command;
 import yappy.exception.YappyException;
 
-import java.nio.file.Paths;
 
 /**
  * The {@code Yappy} class serves as the main entry point for the Yappy application.
@@ -14,18 +15,18 @@ import java.nio.file.Paths;
  */
 public class Yappy {
 
+    private static final String storagePath = Paths.get("src/main/data", "Yappy.txt").toString();
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
 
+
     /**
      * Initialise storage, tasks and ui variables.
-     *
-     * @param filePath The file path to store the add tasks.
      */
-    public Yappy(String filePath) {
+    public Yappy() {
         ui = new Ui();
-        storage = new Storage(filePath);
+        storage = new Storage(storagePath);
         try {
             tasks = new TaskList(storage.loadTask());
             ui.showLine();
@@ -62,13 +63,21 @@ public class Yappy {
         ui.showLine();
     }
 
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.execute(tasks, ui, storage);
+        } catch (YappyException e) {
+            return e.getMessage();
+        }
+    }
+
     /**
      * Main method for program to enter.
      *
      * @param args
      */
-    public static void main(String[] args){
-        String storagePath = Paths.get("src/main/data", "Yappy.txt").toString();
-        new Yappy(storagePath).run();
+    public static void main(String[] args) {
+        new Yappy().run();
     }
 }
