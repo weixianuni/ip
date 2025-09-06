@@ -1,6 +1,7 @@
 package yappy.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import yappy.backend.Storage;
 import yappy.backend.TaskList;
@@ -14,16 +15,16 @@ import yappy.ui.Ui;
  */
 public class FindCommand extends Command {
 
-    String query;
+    private ArrayList<String> queries;
 
     /**
      * Constructs a new <code>FindCommand</code> object with the specified query.
      * This constructor initializes the DeleteCommand's Task.
      *
-     * @param query String used to query for tasks.
+     * @param queries Array of queries to match tasks stored
      */
-    public FindCommand(String query) {
-        this.query = query;
+    public FindCommand(String ... queries) {
+        this.queries = new ArrayList<String>(Arrays.asList(queries));
     }
 
     /**
@@ -43,8 +44,10 @@ public class FindCommand extends Command {
 
         ArrayList<Task> tasks = taskList.getTasks();
         for (Task task : tasks) {
-            if (task.getDescription().contains(this.query)) {
-                filteredList.add(task);
+            for (String query : queries) {
+                if (task.getDescription().contains(query)) {
+                    filteredList.add(task);
+                }
             }
         }
 
