@@ -43,7 +43,7 @@ public class Parser {
             if (!command.trim().contains(" ")) {
                 throw new YappyException("\t Please specify the query string!");
             } else {
-                return new FindCommand(command.split(" ")[1]);
+                return new FindCommand(command.split(" ")[1].split(","));
             }
         } else if (command.startsWith("mark")) {
             if (!command.trim().contains(" ")) {

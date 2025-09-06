@@ -89,7 +89,7 @@ public class Ui {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             int index = i + 1;
-            String next = ("\t " + index + "." + tasks.get(i).toString());
+            String next = ("\n" + index + "." + tasks.get(i).toString());
             sb.append(next);
         }
         return sb.toString();

@@ -52,9 +52,9 @@ public class FindCommand extends Command {
         }
 
         if (filteredList.isEmpty()) {
-            return ("\t No matching task description!");
+            return ("No matching task description!");
         } else {
-            return "\t Here are the tasks in your list:" + ui.showTasks(filteredList);
+            return "Here are the tasks that match your queries:" + ui.showTasks(filteredList);
         }
     }
 }
