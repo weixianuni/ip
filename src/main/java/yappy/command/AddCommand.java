@@ -12,12 +12,12 @@ import yappy.ui.Ui;
  */
 public class AddCommand extends Command {
 
-    private Task task;
+    private final Task task;
 
     /**
      * Constructs a new {@code AddCommand} object with the specified Task.
      * This constructor initializes the AddCommand's Task.
-     * @param task
+     * @param task The task to be added to the task list.
      */
     public AddCommand(Task task) {
         this.task = task;
