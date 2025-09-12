@@ -52,7 +52,7 @@ public class MainWindow extends AnchorPane {
         String response = yappy.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getYappyDialog(response, dukeImage)
         );
         System.out.println(response);
         userInput.clear();
