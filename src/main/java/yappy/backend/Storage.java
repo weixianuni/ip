@@ -1,17 +1,23 @@
 package yappy.backend;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import yappy.exception.YappyException;
 import yappy.task.Deadline;
 import yappy.task.Event;
 import yappy.task.Task;
 import yappy.task.ToDo;
 
-import java.io.*;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Scanner;
+
 
 /**
  * Represent the storage manager for Yappy. A <code>Storage</code> object corresponds to
@@ -19,13 +25,12 @@ import java.util.Scanner;
  */
 public class Storage {
 
-    private File file;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final File file;
 
 
     /**
-     *
-     * @param filePath
+     * @param filePath The path of the file where the tasks are to be stored in.
      */
     public Storage(String filePath) {
         this.file = Paths.get(filePath).toFile();
@@ -37,7 +42,7 @@ public class Storage {
      * @return Tasks saved to disk from previous interaction
      * @throws YappyException If format is incorrect
      */
-    public ArrayList<Task> loadTask() throws YappyException{
+    public ArrayList<Task> loadTask() throws YappyException {
         try {
             ArrayList<Task> tasks = new ArrayList<>();
             Scanner scanner = new Scanner(file);
@@ -50,10 +55,12 @@ public class Storage {
                         tasks.add(new ToDo(params[2], Boolean.parseBoolean(params[1])));
                         break;
                     case "E":
-                        tasks.add(new Event(params[2], Boolean.parseBoolean(params[1]), LocalDateTime.parse(params[3], FORMATTER), LocalDateTime.parse(params[4], FORMATTER)));
+                        tasks.add(new Event(params[2], Boolean.parseBoolean(params[1]),
+                                LocalDateTime.parse(params[3], FORMATTER), LocalDateTime.parse(params[4], FORMATTER)));
                         break;
                     case "D":
-                        tasks.add(new Deadline(params[2], Boolean.parseBoolean(params[1]), LocalDateTime.parse(params[3], FORMATTER)));
+                        tasks.add(new Deadline(params[2], Boolean.parseBoolean(params[1]),
+                                LocalDateTime.parse(params[3], FORMATTER)));
                         break;
                     default:
                         throw new YappyException("Incorrect format in Yappy.txt file!");
@@ -67,12 +74,10 @@ public class Storage {
     }
 
     /**
-     *
-     * @param tasks
-     * @throws YappyException
+     * @param tasks The ArrayList containing the task to be saved to disk.
+     * @throws YappyException If the method is unable to open the file.
      */
-    public void save(ArrayList<Task> tasks) throws YappyException{
-
+    public void save(ArrayList<Task> tasks) throws YappyException {
         try {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bfw = new BufferedWriter(fw);
