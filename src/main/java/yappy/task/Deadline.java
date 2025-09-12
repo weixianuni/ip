@@ -31,7 +31,7 @@ public class Deadline extends Task {
 
     @Override
     public String toFileString() {
-        return "D|" + this.isCompleted + "|" + this.description + "|" + this.by.format(FORMATTER) + "\n";
+        return "D|" + this.isCompleted() + "|" + this.getDescription() + "|" + this.by.format(FORMATTER) + "\n";
     }
 
     @Override
