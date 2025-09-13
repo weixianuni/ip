@@ -1,5 +1,7 @@
 package yappy.task;
 
+import yappy.exception.YappyException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,8 +16,8 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private final LocalDateTime from;
-    private final LocalDateTime to;
+    private LocalDateTime from;
+    private LocalDateTime to;
 
     /**
      * Constructs a new {@code Event} task with the given description,
@@ -65,6 +67,14 @@ public class Event extends Task {
      */
     public LocalDateTime getToDate() {
         return this.to;
+    }
+
+
+    @Override
+    public String reschedule(LocalDateTime newFrom, LocalDateTime newTo) throws YappyException {
+        this.from = newFrom;
+        this.to = newTo;
+        return "Successfully rescheduled event: \n" + this;
     }
 }
 

@@ -1,5 +1,7 @@
 package yappy.task;
 
+import yappy.exception.YappyException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -46,5 +48,11 @@ public class Deadline extends Task {
      */
     public LocalDateTime getByDate() {
         return this.by;
+    }
+
+    @Override
+    public String postpone(LocalDateTime newDeadline) throws YappyException {
+        this.by = by;
+        return "Successfully postponed event: \n" + this;
     }
 }

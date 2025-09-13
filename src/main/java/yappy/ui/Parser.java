@@ -3,14 +3,7 @@ package yappy.ui;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import yappy.command.AddCommand;
-import yappy.command.Command;
-import yappy.command.DeleteCommand;
-import yappy.command.ExitCommand;
-import yappy.command.FindCommand;
-import yappy.command.ListCommand;
-import yappy.command.MarkCommand;
-import yappy.command.UnmarkCommand;
+import yappy.command.*;
 import yappy.exception.YappyException;
 import yappy.task.Deadline;
 import yappy.task.Event;
@@ -59,6 +52,10 @@ public class Parser {
             return parseEventCommand(command);
         } else if (command.startsWith("deadline")) {
             return parseDeadlineCommand(command);
+        } else if (command.startsWith("reschedule")) {
+            return parseRescheduleCommand(command);
+        } else if (command.startsWith("postpone")) {
+            return parsePostponeCommand(command);
         } else {
             throw new YappyException("\t Sorry!! I do not know what that command is.");
         }
@@ -131,5 +128,31 @@ public class Parser {
         String description = command.substring("deadline".length()).trim().split("/by")[0].strip();
         LocalDateTime by = LocalDateTime.parse(command.split("/by")[1].strip(), FORMATTER);
         return new AddCommand(new Deadline(description, false, by));
+    }
+
+    private static Command parsePostponeCommand(String command) throws YappyException {
+        if (!command.trim().contains(" ")) {
+            throw new YappyException("\t Please specify the index of the task to be postponed!");
+        }
+        LocalDateTime by = LocalDateTime.parse(command.split("/by")[1].strip(), FORMATTER);
+        try {
+            return new PostponeCommand(Integer.parseInt(command.split(" ")[1]) - 1, by);
+        } catch (NumberFormatException e) {
+            throw new YappyException("\t Please input an integer index!");
+        }
+    }
+
+    private static Command parseRescheduleCommand(String command) throws YappyException {
+        if (!command.trim().contains(" ")) {
+            throw new YappyException("\t Please specify the index of the task to be rescheduled!");
+        }
+        String fromAndTo = command.split("/from")[1];
+        LocalDateTime from = LocalDateTime.parse(fromAndTo.split("/to")[0].strip(), FORMATTER);
+        LocalDateTime to = LocalDateTime.parse(fromAndTo.split("/to")[1].strip(), FORMATTER);
+        try {
+            return new RescheduleCommand(Integer.parseInt(command.split(" ")[1]) - 1, from, to);
+        } catch (NumberFormatException e) {
+            throw new YappyException("\t Please input an integer index!");
+        }
     }
 }
