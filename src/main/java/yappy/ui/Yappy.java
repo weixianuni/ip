@@ -75,7 +75,6 @@ public class Yappy {
     /**
      * Main method for program to enter.
      *
-     * @param args
      */
     public static void main(String[] args) {
         new Yappy().run();

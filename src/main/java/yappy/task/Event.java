@@ -14,8 +14,8 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private LocalDateTime from;
-    private LocalDateTime to;
+    private final LocalDateTime from;
+    private final LocalDateTime to;
 
     /**
      * Constructs a new {@code Event} task with the given description,
@@ -35,7 +35,7 @@ public class Event extends Task {
 
     @Override
     public String toFileString() {
-        return "E|" + this.isCompleted + "|" + this.description + "|"
+        return "E|" + this.isCompleted() + "|" + this.getDescription() + "|"
                 + this.from.format(FORMATTER) + "|" + this.to.format(FORMATTER) + "\n";
     }
 
@@ -48,19 +48,20 @@ public class Event extends Task {
 
     /**
      * Returns the start date of the event.
-     * Returned object is of type LocalDateTime
+     * Returned object is of type LocalDateTime.
      *
-     * @return
+     * @return The start date and time of the event.
      */
+
     public LocalDateTime getFromDate() {
         return this.from;
     }
 
     /**
      * Returns the end date of the event.
-     * Returned object is of type LocalDateTime
+     * Returned object is of type LocalDateTime.
      *
-     * @return
+     * @return The end date and time of the event.
      */
     public LocalDateTime getToDate() {
         return this.to;
