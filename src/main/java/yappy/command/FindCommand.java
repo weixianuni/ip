@@ -2,6 +2,7 @@ package yappy.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import yappy.backend.Storage;
 import yappy.backend.TaskList;
@@ -38,16 +39,10 @@ public class FindCommand extends Command {
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) {
 
-        ArrayList<Task> filteredList = new ArrayList<>();
 
-        ArrayList<Task> tasks = taskList.getTasks();
-        for (Task task : tasks) {
-            for (String query : queries) {
-                if (task.getDescription().contains(query)) {
-                    filteredList.add(task);
-                }
-            }
-        }
+        ArrayList<Task> filteredList = taskList.getTasks().stream()
+                .filter(task -> queries.stream().anyMatch(query -> task.getDescription().contains(query)))
+                .collect(Collectors.toCollection(ArrayList::new));
 
         if (filteredList.isEmpty()) {
             return ("No matching task description!");
