@@ -1,5 +1,7 @@
 package yappy.task;
 
+import yappy.exception.YappyException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -67,20 +69,12 @@ public class Event extends Task {
         return this.to;
     }
 
-    /**
-     * This method is used to set the <code>to</code> value.
-     * @param newTo The new date and time the event ends at.
-     */
-    public void setToDate(LocalDateTime newTo) {
-        this.to = newTo;
-    }
 
-    /**
-     * This method is used to set the <code>to</code> value.
-     * @param newFrom The new date and time the event starts from.
-     */
-    public void setFromDate(LocalDateTime newFrom) {
+    @Override
+    public String reschedule(LocalDateTime newFrom, LocalDateTime newTo) throws YappyException {
         this.from = newFrom;
+        this.to = newTo;
+        return "Successfully rescheduled event: \n" + this;
     }
 }
 

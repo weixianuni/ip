@@ -1,5 +1,7 @@
 package yappy.task;
 
+import yappy.exception.YappyException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -48,11 +50,9 @@ public class Deadline extends Task {
         return this.by;
     }
 
-    /**
-     * This method is used to change the deadline of the task.
-     * @param newDeadline The new deadline this event is due on.
-     */
-    public void reschedule(LocalDateTime newDeadline) {
-        this.by = newDeadline;
+    @Override
+    public String postpone(LocalDateTime newDeadline) throws YappyException {
+        this.by = by;
+        return "Successfully postponed event: \n" + this;
     }
 }

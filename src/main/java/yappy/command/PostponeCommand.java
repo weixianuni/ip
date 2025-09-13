@@ -6,37 +6,32 @@ import yappy.backend.Storage;
 import yappy.backend.TaskList;
 import yappy.exception.YappyException;
 import yappy.task.Deadline;
-import yappy.task.Event;
 import yappy.task.Task;
 import yappy.ui.Ui;
 
 /**
- * Represents a command to reschedule a <code>Event</code> task.
- * When executed, it changes the 'to' and 'from' date for an existing event
+ * Represents a command to postpone a <code>Deadline</code> task.
+ * When executed, it changes the deadline for an existing deadline task
  * any other type of task will return an error.
  */
-public class RescheduleCommand extends Command {
+public class PostponeCommand extends Command {
     private final int index;
-    private final LocalDateTime toDate;
-    private final LocalDateTime fromDate;
+    private final LocalDateTime deadline;
 
     /**
-     * Constructor to create new RescheduleCommand object
-     * and set the index of the task to be rescheduled and
-     * the new to and from dates.
+     * Constructor to create new <code>PostponeCommand</code> object
+     * and set the index of the task to be postponed and the
+     * new deadline.
      * @param index The index of the task in the task list.
-     * @param fromDate The new start date.
-     * @param toDate The new end date.
+     * @param deadline The new deadline.
      */
-    public RescheduleCommand(int index, LocalDateTime fromDate, LocalDateTime toDate) {
+    public PostponeCommand(int index, LocalDateTime deadline) {
+        this.deadline = deadline;
         this.index = index;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
     }
 
-
     /**
-     * Reschedule an <code>Event</code> task to a new to and from date.
+     * Postpone a <code>Deadline</code> task to a new deadline.
      * @param taskList The tasks which have been added to Yappy.
      * @param ui The ui object that controls interactions with a user.
      * @param storage The storage object that handles storing to and reading from disk.
@@ -45,8 +40,8 @@ public class RescheduleCommand extends Command {
      */
     public String execute(TaskList taskList, Ui ui, Storage storage) throws YappyException {
         try {
-            Event task = (Event) taskList.getTasks().get(this.index);
-            return task.reschedule(this.fromDate, this.toDate);
+            Deadline task = (Deadline) taskList.getTasks().get(this.index);
+            return task.postpone(this.deadline);
         } catch (IndexOutOfBoundsException e) {
             throw new YappyException("Index out of bounds! Try again with a valid index");
         }
