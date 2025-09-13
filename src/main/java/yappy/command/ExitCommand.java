@@ -32,7 +32,7 @@ public class ExitCommand extends Command {
     /**
      * Returns true because this is the ExitCommand class
      *
-     * @return
+     * @return Whether this command is the exit command or not.
      */
     @Override
     public Boolean isExit() {
