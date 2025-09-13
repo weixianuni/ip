@@ -1,11 +1,11 @@
 package yappy.ui;
 
-import yappy.exception.YappyException;
-import yappy.task.Task;
-
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import yappy.exception.YappyException;
+import yappy.task.Task;
 
 /**
  * The <code>UI</code> class handles all interactions with the user.
@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Ui {
 
-    private Scanner input;
+    private final Scanner input;
 
     /**
      * Constructs a new <code>Ui</code> instance with a <code>Scanner</code>
@@ -74,7 +74,7 @@ public class Ui {
     /**
      * Displays a specific error message to the user.
      *
-     * @param message
+     * @param message The error message to be shown in the ui.
      */
     public void showError(String message) {
         System.out.println(message);
@@ -93,15 +93,6 @@ public class Ui {
             sb.append(next);
         }
         return sb.toString();
-    }
-
-    /**
-     * Displays a generic message to the user.
-     *
-     * @param line the message to display
-     */
-    public void showMessage(String line) {
-        System.out.println(line);
     }
 }
 

@@ -8,8 +8,8 @@ package yappy.task;
  *
  */
 public class Task {
-    boolean isCompleted;
-    String description;
+    private boolean isCompleted;
+    private final String description;
 
     /**
      * Constructs a new <code>Task</code> task with the given description.
@@ -63,7 +63,7 @@ public class Task {
      *
      * @return isCompleted field.
      */
-    public Boolean completed() {
+    public Boolean isCompleted() {
         return this.isCompleted;
     }
 }

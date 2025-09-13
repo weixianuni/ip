@@ -2,11 +2,9 @@ package yappy.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import yappy.backend.Storage;
 import yappy.backend.TaskList;
-import yappy.exception.YappyException;
 import yappy.task.Task;
 import yappy.ui.Ui;
 
@@ -16,7 +14,7 @@ import yappy.ui.Ui;
  */
 public class FindCommand extends Command {
 
-    private ArrayList<String> queries;
+    private final ArrayList<String> queries;
 
     /**
      * Constructs a new <code>FindCommand</code> object with the specified query.
@@ -25,7 +23,7 @@ public class FindCommand extends Command {
      * @param queries Array of queries to match tasks stored
      */
     public FindCommand(String ... queries) {
-        this.queries = new ArrayList<String>(Arrays.asList(queries));
+        this.queries = new ArrayList<>(Arrays.asList(queries));
     }
 
     /**
@@ -36,14 +34,20 @@ public class FindCommand extends Command {
      * @param taskList The tasks which have been added to Yappy.
      * @param ui The ui object that controls interactions with a user.
      * @param storage The storage object that handles storing to and reading from disk.
-     * @throws YappyException
      */
     @Override
-    public String execute(TaskList taskList, Ui ui, Storage storage) throws YappyException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) {
+
+        ArrayList<Task> filteredList = new ArrayList<>();
+
         ArrayList<Task> tasks = taskList.getTasks();
-        ArrayList<Task> filteredList = tasks.stream()
-                .filter(task -> queries.stream().anyMatch(query -> task.getDescription().contains(query)))
-                .collect(Collectors.toCollection(ArrayList::new));
+        for (Task task : tasks) {
+            for (String query : queries) {
+                if (task.getDescription().contains(query)) {
+                    filteredList.add(task);
+                }
+            }
+        }
 
         if (filteredList.isEmpty()) {
             return ("No matching task description!");

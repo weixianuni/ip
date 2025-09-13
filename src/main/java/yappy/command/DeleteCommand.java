@@ -12,7 +12,7 @@ import yappy.ui.Ui;
  */
 public class DeleteCommand extends Command {
 
-    private int index;
+    private final int index;
 
     /**
      * Constructs a new {@code DeleteCommand} object with the specified Task.
@@ -30,7 +30,7 @@ public class DeleteCommand extends Command {
      * @param tasks The tasks which have been added to Yappy.
      * @param ui The ui object that controls interactions with a user.
      * @param storage The storage object that handles storing to and reading from disk.
-     * @throws YappyException
+     * @throws YappyException If there are no tasks or the wrong index is given.
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws YappyException {

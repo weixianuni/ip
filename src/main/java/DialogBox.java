@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Circle;
 
 /**
  * Dialogbox class
@@ -24,9 +23,9 @@ public class DialogBox extends HBox {
     private ImageView displayPicture;
 
     /**
-     * Something test
-     * @param text
-     * @param img
+     * Initialises the dialog box text and picture
+     * @param text Text to be printed to the screen inside the dialog box.
+     * @param img Image to be printed beside the dialog box.
      */
     public DialogBox(String text, Image img) {
         try {
@@ -40,15 +39,6 @@ public class DialogBox extends HBox {
         dialog.setText(text);
         displayPicture.setImage(img);
 
-    }
-
-    /**
-     * Function to set the image within a circle
-     */
-    @FXML
-    public void initialize() {
-        Circle clip = new Circle(25, 25, 25); // (centerX, centerY, radius)
-        displayPicture.setClip(clip);
     }
 
     /**
@@ -66,7 +56,7 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getYappyDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
         return db;

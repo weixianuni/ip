@@ -1,6 +1,10 @@
 package yappy.backend;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +17,8 @@ import yappy.task.Event;
 import yappy.task.Task;
 import yappy.task.ToDo;
 
+
+
 /**
  * Represent the storage manager for Yappy. A <code>Storage</code> object corresponds to
  * a storage with a file path and formatter
@@ -20,11 +26,11 @@ import yappy.task.ToDo;
 public class Storage {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private File file;
+    private final File file;
+
 
     /**
-     * Storage constructor that initialises filepath to store saved tasks
-     * @param filePath
+     * @param filePath The path of the file where the tasks are to be stored in.
      */
     public Storage(String filePath) {
         this.file = Paths.get(filePath).toFile();
@@ -69,12 +75,10 @@ public class Storage {
     }
 
     /**
-     * save function writes tasks that have been added to yappy to disk
-     * @param tasks
-     * @throws YappyException
+     * @param tasks The ArrayList containing the task to be saved to disk.
+     * @throws YappyException If the method is unable to open the file.
      */
     public void save(ArrayList<Task> tasks) throws YappyException {
-
         try {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bfw = new BufferedWriter(fw);
