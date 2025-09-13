@@ -48,6 +48,10 @@ public class Deadline extends Task {
         return this.by;
     }
 
+    /**
+     * This method is used to change the deadline of the task.
+     * @param newDeadline The new deadline this event is due on.
+     */
     public void reschedule(LocalDateTime newDeadline) {
         this.by = newDeadline;
     }
