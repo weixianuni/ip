@@ -47,4 +47,8 @@ public class Deadline extends Task {
     public LocalDateTime getByDate() {
         return this.by;
     }
+
+    public void reschedule(LocalDateTime newDeadline) {
+        this.by = newDeadline;
+    }
 }
