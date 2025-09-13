@@ -14,8 +14,8 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    private final LocalDateTime from;
-    private final LocalDateTime to;
+    private LocalDateTime from;
+    private LocalDateTime to;
 
     /**
      * Constructs a new {@code Event} task with the given description,
@@ -65,6 +65,22 @@ public class Event extends Task {
      */
     public LocalDateTime getToDate() {
         return this.to;
+    }
+
+    /**
+     * This method is used to set the <code>to</code> value.
+     * @param newTo The new date and time the event ends at.
+     */
+    public void setToDate(LocalDateTime newTo) {
+        this.to = newTo;
+    }
+
+    /**
+     * This method is used to set the <code>to</code> value.
+     * @param newFrom The new date and time the event starts from.
+     */
+    public void setFromDate(LocalDateTime newFrom) {
+        this.from = newFrom;
     }
 }
 
