@@ -2,7 +2,6 @@ package yappy.backend;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
-import yappy.backend.Storage;
 import yappy.exception.YappyException;
 import yappy.task.*;
 
@@ -13,9 +12,9 @@ import java.util.ArrayList;
 
 public class StorageTest {
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private File tempFile;
     private Storage storage;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     /**
      *

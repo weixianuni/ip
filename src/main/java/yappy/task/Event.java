@@ -1,9 +1,10 @@
 package yappy.task;
 
-import yappy.exception.YappyException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import yappy.exception.YappyException;
+
 
 /**
  * Represents an <code>Event</code> task which is a type of <code>Task</code>.

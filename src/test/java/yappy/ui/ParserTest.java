@@ -1,11 +1,14 @@
 package yappy.ui;
 
-import yappy.command.*;
-import yappy.exception.YappyException;
 import java.time.format.DateTimeFormatter;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+import yappy.command.ExitCommand;
+import yappy.command.ListCommand;
+import yappy.exception.YappyException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
