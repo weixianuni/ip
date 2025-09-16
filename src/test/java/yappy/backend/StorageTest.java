@@ -47,20 +47,20 @@ public class StorageTest {
         Task t1 = tasks.get(0);
         assertInstanceOf(ToDo.class, t1);
         assertEquals("Buy milk", t1.getDescription());
-        assertFalse(t1.completed());
+        assertFalse(t1.isCompleted());
 
         // Verify second task is a Deadline
         Task t2 = tasks.get(1);
         assertInstanceOf(Deadline.class, t2);
         assertEquals("Submit report", t2.getDescription());
-        assertTrue(t2.completed());
+        assertTrue(t2.isCompleted());
         assertEquals(LocalDateTime.parse("2025-08-31 23:59", FORMATTER), ((Deadline) t2).getByDate());
 
         // Verify third task is an Event
         Task t3 = tasks.get(2);
         assertInstanceOf(Event.class, t3);
         assertEquals("Meeting", t3.getDescription());
-        assertFalse(t3.completed());
+        assertFalse(t3.isCompleted());
         assertEquals(LocalDateTime.parse("2025-08-30 10:00", FORMATTER), ((Event) t3).getFromDate());
         assertEquals(LocalDateTime.parse("2025-08-30 11:00", FORMATTER), ((Event) t3).getToDate());
     }
