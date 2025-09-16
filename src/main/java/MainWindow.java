@@ -54,10 +54,10 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getYappyDialog(response, dukeImage)
         );
-        System.out.println(response);
+        // System.out.println(response);
         userInput.clear();
         if (input.equals("bye")) {
-            PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2 second delay
+            PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2-second delay
             delay.setOnFinished(event -> Platform.exit());
             delay.play();
         }

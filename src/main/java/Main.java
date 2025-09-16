@@ -12,7 +12,7 @@ import yappy.ui.Yappy;
  */
 public class Main extends Application {
 
-    private Yappy yappy = new Yappy();
+    private final Yappy yappy = new Yappy();
 
     @Override
     public void start(Stage stage) {
