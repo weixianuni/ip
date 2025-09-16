@@ -1,25 +1,26 @@
 package yappy.ui;
 
-import java.time.format.DateTimeFormatter;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Test;
 
 import yappy.command.ExitCommand;
 import yappy.command.ListCommand;
 import yappy.exception.YappyException;
-import org.junit.jupiter.api.Test;
+
 
 
 public class ParserTest {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @Test
-    public void testParse_ExitCommand_returnExitCommand() throws YappyException {
+    public void testParse_exitCommand_returnExitCommand() throws YappyException {
         assertInstanceOf(ExitCommand.class, Parser.parse("bye"));
     }
 
     @Test
-    public void testParse_ListCommand_returnListCommand() throws YappyException {
+    public void testParse_listCommand_returnListCommand() throws YappyException {
         assertInstanceOf(ListCommand.class, Parser.parse("list"));
     }
 

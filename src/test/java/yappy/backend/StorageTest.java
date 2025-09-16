@@ -1,14 +1,29 @@
 package yappy.backend;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
-import yappy.exception.YappyException;
-import yappy.task.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import yappy.exception.YappyException;
+import yappy.task.Deadline;
+import yappy.task.Event;
+import yappy.task.Task;
+import yappy.task.ToDo;
+
+
 
 public class StorageTest {
 
@@ -17,7 +32,7 @@ public class StorageTest {
     private Storage storage;
 
     /**
-     *
+     * Helper method to test loadTask method
      * @throws IOException
      */
     @BeforeEach
