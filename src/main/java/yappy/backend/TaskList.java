@@ -1,9 +1,9 @@
 package yappy.backend;
 
+import java.util.ArrayList;
+
 import yappy.exception.YappyException;
 import yappy.task.Task;
-
-import java.util.ArrayList;
 
 /**
  * Represents the TaskList populated with tasks from Yappy. A <code>TaskList</code> object corresponds to
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class TaskList {
 
-    ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     /**
      * Constructor that takes no arguments.
@@ -22,8 +22,8 @@ public class TaskList {
     }
 
     /**
-     * Constructor that takes in an ArrayList of Tasks and makes a copy of it
-     * @param tasks
+     * Constructor that takes in an ArrayList of Tasks and makes a copy of it.
+     * @param tasks The tasks that have been stored in Yappy until now.
      */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
@@ -31,7 +31,7 @@ public class TaskList {
 
     /**
      * Adds a task to the ArrayList
-     * @param task
+     * @param task The new task to be added to the task list.
      */
     public void add(Task task) {
         this.tasks.add(task);

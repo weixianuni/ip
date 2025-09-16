@@ -1,9 +1,8 @@
 package yappy.task;
 
-import yappy.exception.YappyException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 
 /**
  * Represents a <code>Deadline</code> task which is a type of <code>Task</code>.
@@ -44,15 +43,15 @@ public class Deadline extends Task {
     /**
      * Returns the deadline of the event.
      *
-     * @return
+     * @return The by date in LocalDateTime
      */
     public LocalDateTime getByDate() {
         return this.by;
     }
 
     @Override
-    public String postpone(LocalDateTime newDeadline) throws YappyException {
-        this.by = by;
+    public String postpone(LocalDateTime newDeadline) {
+        this.by = newDeadline;
         return "Successfully postponed event: \n" + this;
     }
 }

@@ -5,9 +5,7 @@ import java.time.LocalDateTime;
 import yappy.backend.Storage;
 import yappy.backend.TaskList;
 import yappy.exception.YappyException;
-import yappy.task.Deadline;
 import yappy.task.Event;
-import yappy.task.Task;
 import yappy.ui.Ui;
 
 /**

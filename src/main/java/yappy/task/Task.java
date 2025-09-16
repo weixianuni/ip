@@ -1,8 +1,9 @@
 package yappy.task;
 
+import java.time.LocalDateTime;
+
 import yappy.exception.YappyException;
 
-import java.time.LocalDateTime;
 
 /**
  * Represents a task.
@@ -72,7 +73,7 @@ public class Task {
     }
 
     /**
-     * This method is to be overriden by the <code>Event</code> class to
+     * This method is to be overridden by the <code>Event</code> class to
      * reschedule the event's start and end date and time.
      * @param newFrom New date an event starts from.
      * @param newTo New end date an events lasts to.
@@ -84,7 +85,7 @@ public class Task {
     }
 
     /**
-     * This method is to be overriden by the <code>Deadline</code> class
+     * This method is to be overridden by the <code>Deadline</code> class
      * to postpone the <code>Deadline</code> task's deadline.
      * @param newDeadline New deadline for a Deadline task.
      * @return A message that states whether the task has been successfully postponed.

@@ -6,7 +6,6 @@ import yappy.backend.Storage;
 import yappy.backend.TaskList;
 import yappy.exception.YappyException;
 import yappy.task.Deadline;
-import yappy.task.Task;
 import yappy.ui.Ui;
 
 /**
