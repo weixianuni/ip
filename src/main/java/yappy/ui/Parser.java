@@ -2,6 +2,7 @@ package yappy.ui;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import yappy.command.AddCommand;
 import yappy.command.Command;
@@ -32,6 +33,23 @@ public class Parser {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    private static final String COMMANDS_HELP =
+            """
+            \t I don't understand. Available commands:
+            \t - bye
+            \t - list
+            \t - find <query1,query2,...>
+            \t - mark <index>
+            \t - unmark <index>
+            \t - delete <index>
+            \t - todo <description>
+            \t - deadline <description> /by <date>
+            \t - event <description> /from <date> /to <date>
+            \t - reschedule <index> /from <date> /to <date>
+            \t - postpone <index> /by <date>
+            \t Note: dates must use the format yyyy-MM-dd HH:mm""";
+
+
     /**
      * Parses the given raw input string and returns the corresponding <code>Command</code>
      * object that can be executed by the application.
@@ -43,125 +61,283 @@ public class Parser {
      * @throws YappyException If the input is invalid or does not match a known command.
      */
     public static Command parse(String command) throws YappyException {
-        if (command.equals("bye")) {
+        if (command == null || command.trim().isEmpty()) {
+            throw new YappyException(COMMANDS_HELP);
+        }
+
+        String trimmed = command.trim();
+        String[] parts = trimmed.split("\\s+", 2);
+        String commandWord = parts[0];
+        String args = parts.length > 1 ? parts[1].trim() : "";
+
+        switch (commandWord) {
+        case "bye":
             return new ExitCommand();
-        } else if (command.equals("list")) {
+        case "list":
             return new ListCommand();
-        } else if (command.startsWith("find")) {
-            return parseFindCommand(command);
-        } else if (command.startsWith("mark")) {
-            return parseMarkCommand(command);
-        } else if (command.startsWith("unmark")) {
-            return parseUnmarkCommand(command);
-        } else if (command.startsWith("delete")) {
-            return parseDeleteCommand(command);
-        } else if (command.startsWith("todo")) {
-            return parseTodoCommand(command);
-        } else if (command.startsWith("event")) {
-            return parseEventCommand(command);
-        } else if (command.startsWith("deadline")) {
-            return parseDeadlineCommand(command);
-        } else if (command.startsWith("reschedule")) {
-            return parseRescheduleCommand(command);
-        } else if (command.startsWith("postpone")) {
-            return parsePostponeCommand(command);
-        } else {
-            throw new YappyException("\t Sorry!! I do not know what that command is.");
+        case "find":
+            return parseFindCommand(args);
+        case "mark":
+            return parseMarkCommand(args);
+        case "unmark":
+            return parseUnmarkCommand(args);
+        case "delete":
+            return parseDeleteCommand(args);
+        case "todo":
+            return parseTodoCommand(args);
+        case "event":
+            return parseEventCommand(args);
+        case "deadline":
+            return parseDeadlineCommand(args);
+        case "reschedule":
+            return parseRescheduleCommand(args);
+        case "postpone":
+            return parsePostponeCommand(args);
+        default:
+            throw new YappyException(COMMANDS_HELP);
         }
     }
 
-    private static Command parseFindCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
+    /**
+     * Returns a {@link FindCommand} built from the provided argument string.
+     *
+     * <p>Splits the argument by commas and trims each query token.</p>
+     *
+     * @param args The comma separated query string.
+     * @return A {@link FindCommand} containing the parsed queries.
+     * @throws YappyException If no queries are provided.
+     */
+    private static Command parseFindCommand(String args) throws YappyException {
+        if (args.isEmpty()) {
             throw new YappyException("\t Please specify the query string!");
-        } else {
-            return new FindCommand(command.split(" ")[1].split(","));
         }
+        String[] queries = java.util.Arrays.stream(args.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .toArray(String[]::new);
+        if (queries.length == 0) {
+            throw new YappyException("\t Please specify at least one query!");
+        }
+        return new FindCommand(queries);
     }
 
-    private static Command parseMarkCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
-            throw new YappyException("\t Please specify the index of the task to mark as completed!");
-        }
-        try {
-            return new MarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
-        } catch (NumberFormatException e) {
-            throw new YappyException("\t Please input an integer index!");
-        }
+    /**
+     * Returns a {@link MarkCommand} for the specified index token.
+     *
+     * @param args The token or argument string containing the index.
+     * @return A {@link MarkCommand} targeting the parsed index.
+     * @throws YappyException If the index is missing or invalid.
+     */
+    private static Command parseMarkCommand(String args) throws YappyException {
+        int idx = parseIndex(args, "mark");
+        return new MarkCommand(idx);
     }
 
-    private static Command parseUnmarkCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
-            throw new YappyException("\t Please specify the index of the task you wish to mark as uncompleted!");
-        }
-        try {
-            return new UnmarkCommand(Integer.parseInt(command.split(" ")[1]) - 1);
-        } catch (NumberFormatException e) {
-            throw new YappyException("\t Please input an integer index!");
-        }
+    /**
+     * Returns an {@link UnmarkCommand} for the specified index token.
+     *
+     * @param args The token or argument string containing the index.
+     * @return An {@link UnmarkCommand} targeting the parsed index.
+     * @throws YappyException If the index is missing or invalid.
+     */
+    private static Command parseUnmarkCommand(String args) throws YappyException {
+        int idx = parseIndex(args, "unmark");
+        return new UnmarkCommand(idx);
     }
 
-    private static Command parseDeleteCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
-            throw new YappyException("\t Please specify the index of the task you wish to delete!");
-        }
-        try {
-            return new DeleteCommand(Integer.parseInt(command.split(" ")[1]) - 1);
-        } catch (NumberFormatException e) {
-            throw new YappyException("\t Please input an integer index!");
-        }
+    /**
+     * Returns a {@link DeleteCommand} for the specified index token.
+     *
+     * @param args The token or argument string containing the index.
+     * @return A {@link DeleteCommand} targeting the parsed index.
+     * @throws YappyException If the index is missing or invalid.
+     */
+    private static Command parseDeleteCommand(String args) throws YappyException {
+        int idx = parseIndex(args, "delete");
+        return new DeleteCommand(idx);
     }
 
-    private static Command parseTodoCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
+    /**
+     * Returns an {@link AddCommand} that adds a {@link ToDo} created from the arguments.
+     *
+     * <p>Keeps everything before an optional "/from" token as the todo description.</p>
+     *
+     * @param args The arguments containing the todo description.
+     * @return An {@link AddCommand} wrapping the created {@link ToDo}.
+     * @throws YappyException If the description is missing or empty.
+     */
+    private static Command parseTodoCommand(String args) throws YappyException {
+        if (args.isEmpty()) {
             throw new YappyException("\t Please specify the todo task!");
         }
-        String description = command.substring("todo".length()).trim().split("/from")[0];
+        // keep everything before a possible "/from" token
+        String description = args.split("/from", 2)[0].trim();
+        if (description.isEmpty()) {
+            throw new YappyException("\t Todo description cannot be empty!");
+        }
         return new AddCommand(new ToDo(description, false));
     }
 
-    private static Command parseEventCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
+    /**
+     * Returns an {@link AddCommand} that adds an {@link Event} parsed from the arguments.
+     *
+     * <p>Arguments must contain '/from' and '/to' tokens followed by date/time values.</p>
+     *
+     * @param args The arguments containing the event description and dates.
+     * @return An {@link AddCommand} wrapping the created {@link Event}.
+     * @throws YappyException If description or date tokens are missing or invalid.
+     */
+    private static Command parseEventCommand(String args) throws YappyException {
+        if (args.isEmpty()) {
             throw new YappyException("\t Please specify the event task and start and end dates!");
         }
-        String description = command.substring("event".length()).trim().split("/from")[0];
-        String fromAndTo = command.split("/from")[1];
-        LocalDateTime from = LocalDateTime.parse(fromAndTo.split("/to")[0].strip(), FORMATTER);
-        LocalDateTime to = LocalDateTime.parse(fromAndTo.split("/to")[1].strip(), FORMATTER);
+        String[] fromSplit = args.split("/from", 2);
+        if (fromSplit.length < 2) {
+            throw new YappyException("\t Event must include '/from' and '/to' with dates!");
+        }
+        String description = fromSplit[0].trim();
+        String[] toSplit = fromSplit[1].split("/to", 2);
+        if (toSplit.length < 2) {
+            throw new YappyException("\t Event must include '/to' with end date!");
+        }
+        LocalDateTime from = parseDate(toSplit[0].trim(), "event start");
+        LocalDateTime to = parseDate(toSplit[1].trim(), "event end");
+        if (description.isEmpty()) {
+            throw new YappyException("\t Event description cannot be empty!");
+        }
         return new AddCommand(new Event(description, false, from, to));
     }
 
-    private static Command parseDeadlineCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
+    /**
+     * Returns an {@link AddCommand} that adds a {@link Deadline} parsed from the arguments.
+     *
+     * <p>Arguments must include the '/by' token followed by a date/time value.</p>
+     *
+     * @param args The arguments containing the deadline description and date.
+     * @return An {@link AddCommand} wrapping the created {@link Deadline}.
+     * @throws YappyException If description or '/by' date is missing or invalid.
+     */
+    private static Command parseDeadlineCommand(String args) throws YappyException {
+        if (args.isEmpty()) {
             throw new YappyException("\t Please specify the deadline task and deadline!");
         }
-        String description = command.substring("deadline".length()).trim().split("/by")[0].strip();
-        LocalDateTime by = LocalDateTime.parse(command.split("/by")[1].strip(), FORMATTER);
+        String[] parts = args.split("/by", 2);
+        if (parts.length < 2) {
+            throw new YappyException("\t Deadline must include '/by' with a date!");
+        }
+        String description = parts[0].trim();
+        LocalDateTime by = parseDate(parts[1].trim(), "deadline");
+        if (description.isEmpty()) {
+            throw new YappyException("\t Deadline description cannot be empty!");
+        }
         return new AddCommand(new Deadline(description, false, by));
     }
 
-    private static Command parsePostponeCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
+    /**
+     * Returns a {@link PostponeCommand} that postpones the task at the specified index.
+     *
+     * <p>Accepts either a trailing '/by' token or a plain date/time string after the index.</p>
+     *
+     * @param args The arguments containing the index and the postpone date.
+     * @return A {@link PostponeCommand} with the parsed index and date.
+     * @throws YappyException If index or date is missing or invalid.
+     */
+    private static Command parsePostponeCommand(String args) throws YappyException {
+        if (args.isEmpty()) {
             throw new YappyException("\t Please specify the index of the task to be postponed!");
         }
-        LocalDateTime by = LocalDateTime.parse(command.split("/by")[1].strip(), FORMATTER);
+        String[] parts = args.split("\\s+", 2);
+        int idx = parseIndex(parts[0], "postpone");
+        if (parts.length < 2) {
+            throw new YappyException("\t Please specify the '/by' date for postponing!");
+        }
+        String byPart = parts[1];
+        if (!byPart.contains("/by")) {
+            // allow both formats: "postpone 2 /by 2024-01-01 10:00" or "postpone 2 2024-01-01 10:00"
+            // if "/by" present, extract after it; otherwise treat the remainder as date
+            byPart = byPart;
+        }
+        String byStr = byPart.contains("/by") ? byPart.split("/by", 2)[1].trim() : byPart.trim();
+        LocalDateTime by = parseDate(byStr, "postpone");
+        return new PostponeCommand(idx, by);
+    }
+
+    /**
+     * Returns a {@link RescheduleCommand} that reschedules the task at the specified index.
+     *
+     * <p>Arguments must include '/from' and '/to' tokens with date/time values after the index.</p>
+     *
+     * @param args The arguments containing the index and the from/to dates.
+     * @return A {@link RescheduleCommand} with the parsed index and date range.
+     * @throws YappyException If index or date tokens are missing or invalid.
+     */
+    private static Command parseRescheduleCommand(String args) throws YappyException {
+        if (args.isEmpty()) {
+            throw new YappyException("\t Please specify the index of the task to be rescheduled!");
+        }
+        String[] parts = args.split("\\s+", 2);
+        int idx = parseIndex(parts[0], "reschedule");
+        if (parts.length < 2) {
+            throw new YappyException("\t Please specify the '/from' and '/to' dates!");
+        }
+        String fromTo = parts[1];
+        String[] fromSplit = fromTo.split("/from", 2);
+        if (fromSplit.length < 2) {
+            throw new YappyException("\t Reschedule must include '/from' and '/to' with dates!");
+        }
+        String[] toSplit = fromSplit[1].split("/to", 2);
+        if (toSplit.length < 2) {
+            throw new YappyException("\t Reschedule must include '/to' with end date!");
+        }
+        LocalDateTime from = parseDate(toSplit[0].trim(), "reschedule from");
+        LocalDateTime to = parseDate(toSplit[1].trim(), "reschedule to");
+        return new RescheduleCommand(idx, from, to);
+    }
+
+    /**
+     * Parses the provided token or arguments and returns a zero-based index.
+     *
+     * <p>Accepts a string containing the index as the first token and converts it to zero-based form.</p>
+     *
+     * @param tokenOrArgs The token or argument string containing the index.
+     * @param cmdName The name of the command for clearer error messages.
+     * @return The parsed zero-based index.
+     * @throws YappyException If the index is missing, non-numeric, or non-positive.
+     */
+    private static int parseIndex(String tokenOrArgs, String cmdName) throws YappyException {
+        if (tokenOrArgs == null || tokenOrArgs.trim().isEmpty()) {
+            throw new YappyException("\t Please specify the index for '" + cmdName + "'!");
+        }
+        String token = tokenOrArgs.trim().split("\\s+")[0];
         try {
-            return new PostponeCommand(Integer.parseInt(command.split(" ")[1]) - 1, by);
+            int idx = Integer.parseInt(token) - 1;
+            if (idx < 0) {
+                throw new YappyException("\t Index must be a positive integer!");
+            }
+            return idx;
         } catch (NumberFormatException e) {
             throw new YappyException("\t Please input an integer index!");
         }
     }
 
-    private static Command parseRescheduleCommand(String command) throws YappyException {
-        if (!command.trim().contains(" ")) {
-            throw new YappyException("\t Please specify the index of the task to be rescheduled!");
+    /**
+     * Parses the provided date/time string using the expected formatter and returns a {@link LocalDateTime}.
+     *
+     * <p>Expects the format yyyy-MM-dd HH:mm and provides a clear error message on failure.</p>
+     *
+     * @param dateString The date/time string to parse.
+     * @param label A short label used in error messages to indicate which date failed to parse.
+     * @return The parsed {@link LocalDateTime}.
+     * @throws YappyException If the date string is missing or cannot be parsed.
+     */
+    private static LocalDateTime parseDate(String dateString, String label) throws YappyException {
+        if (dateString == null || dateString.isEmpty()) {
+            throw new YappyException("\t Please specify a date/time for " + label + " using format yyyy-MM-dd HH:mm");
         }
-        String fromAndTo = command.split("/from")[1];
-        LocalDateTime from = LocalDateTime.parse(fromAndTo.split("/to")[0].strip(), FORMATTER);
-        LocalDateTime to = LocalDateTime.parse(fromAndTo.split("/to")[1].strip(), FORMATTER);
         try {
-            return new RescheduleCommand(Integer.parseInt(command.split(" ")[1]) - 1, from, to);
-        } catch (NumberFormatException e) {
-            throw new YappyException("\t Please input an integer index!");
+            return LocalDateTime.parse(dateString, FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new YappyException("\t Invalid date/time for " + label + ". Use format yyyy-MM-dd HH:mm");
         }
     }
 }
