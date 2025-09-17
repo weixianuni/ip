@@ -64,6 +64,13 @@ public class Yappy {
         ui.showLine();
     }
 
+    /**
+     * Processes a user input string, parses it into a command, and executes the command.
+     * Returns the result or error message as a string.
+     *
+     * @param input The user input to process.
+     * @return The response message after executing the command.
+     */
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
@@ -74,8 +81,7 @@ public class Yappy {
     }
 
     /**
-     * Main method for program to enter.
-     *
+     * yappy.ui.Main method for program to enter.
      */
     public static void main(String[] args) {
         new Yappy().run();

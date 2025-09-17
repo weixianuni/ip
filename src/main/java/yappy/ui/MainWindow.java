@@ -1,3 +1,5 @@
+package yappy.ui;
+
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -9,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
-import yappy.ui.Yappy;
 
 /**
  * Controller for the main GUI.

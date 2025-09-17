@@ -1,3 +1,5 @@
+package yappy.ui;
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -5,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import yappy.ui.Yappy;
 
 /**
  * A GUI for Duke using FXML.
@@ -23,7 +24,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            fxmlLoader.<MainWindow>getController().setYappy(yappy); // inject the Yappy instance
+            fxmlLoader.<MainWindow>getController().setYappy(yappy);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import yappy.exception.YappyException;
 import yappy.task.Task;
-
 /**
  * The <code>UI</code> class handles all interactions with the user.
  * This class ensures a consistent user interface during the program's execution.
@@ -14,6 +13,7 @@ import yappy.task.Task;
 public class Ui {
 
     private final Scanner input;
+    private MainWindow mainWindow;
 
     /**
      * Constructs a new <code>Ui</code> instance with a <code>Scanner</code>
@@ -21,6 +21,10 @@ public class Ui {
      */
     public Ui() {
         this.input = new Scanner(System.in);
+    }
+
+    public void setMainWindow(MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
     }
 
     /**
@@ -95,4 +99,3 @@ public class Ui {
         return sb.toString();
     }
 }
-
