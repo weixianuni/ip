@@ -15,7 +15,8 @@ import yappy.exception.YappyException;
  */
 public class Yappy {
 
-    private static final String storagePath = Paths.get("src/main/data", "Yappy.txt").toString();
+    private static final String storagePath = Paths.get(System.getProperty("user.dir"), "src/main/data/Yappy.txt")
+            .toString();
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
