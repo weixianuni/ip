@@ -6,6 +6,8 @@
 .text-field {
     -fx-background-color: #e1eec3;
     -fx-font: 20px "Arial";
+    -fx-padding: 0 8px 0 8px; /* Adds horizontal padding */
+    -fx-background-radius: 5;
 }
 
 .button {
@@ -44,5 +46,12 @@
 .scroll-bar .decrement-button {
     -fx-pref-height: 0;
     -fx-opacity: 0;
+}
+
+.button {
+    -fx-background-color: #e1eec3;
+    -fx-font: italic bold 16px "Arial";
+    -fx-text-fill: #f05053;
+    -fx-padding: 0 8px 0 8px; /* Adds horizontal padding */
 }
 

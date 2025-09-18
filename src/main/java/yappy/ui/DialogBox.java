@@ -32,6 +32,7 @@ public class DialogBox extends HBox {
      * @param text Text to be printed to the screen inside the dialog box.
      * @param img Image to be printed beside the dialog box.
      */
+
     public DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
@@ -49,6 +50,10 @@ public class DialogBox extends HBox {
         displayPicture.setFitWidth(48);
         displayPicture.setFitHeight(48);
         displayPicture.setPreserveRatio(true);
+
+        double radius = Math.min(displayPicture.getFitWidth(), displayPicture.getFitHeight()) / 2;
+        javafx.scene.shape.Circle clip = new javafx.scene.shape.Circle(radius, radius, radius);
+        displayPicture.setClip(clip);
 
         setSpacing(8);
         setPadding(new Insets(4));
