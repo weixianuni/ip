@@ -1,10 +1,8 @@
 package yappy.ui;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import yappy.exception.YappyException;
 import yappy.task.Task;
 /**
  * The <code>UI</code> class handles all interactions with the user.
@@ -13,7 +11,6 @@ import yappy.task.Task;
 public class Ui {
 
     private final Scanner input;
-    private MainWindow mainWindow;
 
     /**
      * Constructs a new <code>Ui</code> instance with a <code>Scanner</code>
@@ -23,65 +20,11 @@ public class Ui {
         this.input = new Scanner(System.in);
     }
 
-    public void setMainWindow(MainWindow mainWindow) {
-        this.mainWindow = mainWindow;
-    }
-
-    /**
-     * Reads the next line of user input.
-     *
-     * @return The raw user input string.
-     * @throws YappyException If no line was found when reading user input.
-     */
-    public String readCommand() throws YappyException {
-        try {
-            return input.nextLine();
-        } catch (NoSuchElementException e) {
-            throw new YappyException("\t No line was found.");
-        }
-    }
-
     /**
      *
      */
     public void showLoadingError() {
         System.out.println("\t There was an error loading from the storage file!");
-    }
-
-    /**
-     * Displays the goodbye message when program exits.
-     */
-    public void showGoodbye() {
-        System.out.println("\tBye. Hope to see you again soon!");
-    }
-
-    /**
-     * Displays the default greeting when user starts the program.
-     */
-    public void showWelcome() {
-        System.out.println("\t Hello, I'm Yappy!\n\t What can I do for you?");
-    }
-
-    /**
-     * Displays the welcome back greeting for recurring users.
-     */
-    public void showWelcomeBack() {
-        System.out.println("\t Hello, welcome back!\n\t What can I do for you?");
-    }
-    /**
-     * Display formatting line.
-     */
-    public void showLine() {
-        System.out.println("\t____________________________________________________________");
-    }
-
-    /**
-     * Displays a specific error message to the user.
-     *
-     * @param message The error message to be shown in the ui.
-     */
-    public void showError(String message) {
-        System.out.println(message);
     }
 
     /**
@@ -93,7 +36,7 @@ public class Ui {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
             int index = i + 1;
-            String next = ("\n" + index + "." + tasks.get(i).toString());
+            String next = ("\n\t" + index + "." + tasks.get(i).toString());
             sb.append(next);
         }
         return sb.toString();

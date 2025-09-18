@@ -22,7 +22,7 @@ public class ListCommand extends Command {
             return ("You currently do not have any tasks");
         } else {
             assert !tasks.getTasks().isEmpty() : "list should not be empty";
-            return "\t Here are the tasks in your list:" + ui.showTasks(tasks.getTasks());
+            return "Here are the tasks in your list:" + ui.showTasks(tasks.getTasks());
         }
     }
 }

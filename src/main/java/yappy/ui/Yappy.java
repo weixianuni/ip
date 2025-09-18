@@ -30,38 +30,9 @@ public class Yappy {
         storage = new Storage(storagePath);
         try {
             tasks = new TaskList(storage.loadTask());
-            ui.showLine();
-            ui.showWelcomeBack();
-            ui.showLine();
         } catch (YappyException e) {
             tasks = new TaskList();
-            ui.showLine();
-            ui.showWelcome();
-            ui.showLine();
         }
-    }
-
-    /**
-     * Keeps the program alive and listens for user inputs.
-     */
-    public void run() {
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String fullCommand = ui.readCommand();
-                ui.showLine();
-                Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-                isExit = c.isExit();
-            } catch (YappyException e) {
-                ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }
-        }
-        ui.showLine();
-        ui.showGoodbye();
-        ui.showLine();
     }
 
     /**
@@ -78,12 +49,5 @@ public class Yappy {
         } catch (YappyException e) {
             return e.getMessage();
         }
-    }
-
-    /**
-     * yappy.ui.Main method for program to enter.
-     */
-    public static void main(String[] args) {
-        new Yappy().run();
     }
 }

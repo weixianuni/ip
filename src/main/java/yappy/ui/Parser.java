@@ -32,24 +32,23 @@ import yappy.task.ToDo;
 public class Parser {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
     private static final String COMMANDS_HELP =
             """
-            \t I don't understand. Available commands:
-            \t - bye
-            \t - list
-            \t - find <query1,query2,...>
-            \t - mark <index>
-            \t - unmark <index>
-            \t - delete <index>
-            \t - todo <description>
-            \t - deadline <description> /by <date>
-            \t - event <description> /from <date> /to <date>
-            \t - reschedule <index> /from <date> /to <date>
-            \t - postpone <index> /by <date>
-            \t Note: dates must use the format yyyy-MM-dd HH:mm""";
-
-
+            Sorry I do not understand what you're yapping about.
+            \t
+            Available commands:
+            - bye
+            - list
+            - find <query1,query2,...>
+            - mark <index>
+            - unmark <index>
+            - delete <index>
+            - todo <description>
+            - deadline <description> /by <date>
+            - event <description> /from <date> /to <date>
+            - reschedule <index> /from <date> /to <date>
+            - postpone <index> /by <date>
+            Note: dates must use the format yyyy-MM-dd HH:mm""";
     /**
      * Parses the given raw input string and returns the corresponding <code>Command</code>
      * object that can be executed by the application.
@@ -116,7 +115,7 @@ public class Parser {
                 .filter(s -> !s.isEmpty())
                 .toArray(String[]::new);
         if (queries.length == 0) {
-            throw new YappyException("\t Please specify at least one query!");
+            throw new YappyException("Please specify at least one query!");
         }
         return new FindCommand(queries);
     }
@@ -168,12 +167,12 @@ public class Parser {
      */
     private static Command parseTodoCommand(String args) throws YappyException {
         if (args.isEmpty()) {
-            throw new YappyException("\t Please specify the todo task!");
+            throw new YappyException("Please specify the todo task!");
         }
         // keep everything before a possible "/from" token
         String description = args.split("/from", 2)[0].trim();
         if (description.isEmpty()) {
-            throw new YappyException("\t Todo description cannot be empty!");
+            throw new YappyException("Todo description cannot be empty!");
         }
         return new AddCommand(new ToDo(description, false));
     }
@@ -189,21 +188,21 @@ public class Parser {
      */
     private static Command parseEventCommand(String args) throws YappyException {
         if (args.isEmpty()) {
-            throw new YappyException("\t Please specify the event task and start and end dates!");
+            throw new YappyException("Please specify the event task and start and end dates!");
         }
         String[] fromSplit = args.split("/from", 2);
         if (fromSplit.length < 2) {
-            throw new YappyException("\t Event must include '/from' and '/to' with dates!");
+            throw new YappyException("Event must include '/from' and '/to' with dates!");
         }
         String description = fromSplit[0].trim();
         String[] toSplit = fromSplit[1].split("/to", 2);
         if (toSplit.length < 2) {
-            throw new YappyException("\t Event must include '/to' with end date!");
+            throw new YappyException("Event must include '/to' with end date!");
         }
         LocalDateTime from = parseDate(toSplit[0].trim(), "event start");
         LocalDateTime to = parseDate(toSplit[1].trim(), "event end");
         if (description.isEmpty()) {
-            throw new YappyException("\t Event description cannot be empty!");
+            throw new YappyException("Event description cannot be empty!");
         }
         return new AddCommand(new Event(description, false, from, to));
     }
@@ -219,16 +218,16 @@ public class Parser {
      */
     private static Command parseDeadlineCommand(String args) throws YappyException {
         if (args.isEmpty()) {
-            throw new YappyException("\t Please specify the deadline task and deadline!");
+            throw new YappyException("Please specify the deadline task and deadline!");
         }
         String[] parts = args.split("/by", 2);
         if (parts.length < 2) {
-            throw new YappyException("\t Deadline must include '/by' with a date!");
+            throw new YappyException("Deadline must include '/by' with a date!");
         }
         String description = parts[0].trim();
         LocalDateTime by = parseDate(parts[1].trim(), "deadline");
         if (description.isEmpty()) {
-            throw new YappyException("\t Deadline description cannot be empty!");
+            throw new YappyException("Deadline description cannot be empty!");
         }
         return new AddCommand(new Deadline(description, false, by));
     }
@@ -244,12 +243,12 @@ public class Parser {
      */
     private static Command parsePostponeCommand(String args) throws YappyException {
         if (args.isEmpty()) {
-            throw new YappyException("\t Please specify the index of the task to be postponed!");
+            throw new YappyException("Please specify the index of the task to be postponed!");
         }
         String[] parts = args.split("\\s+", 2);
         int idx = parseIndex(parts[0], "postpone");
         if (parts.length < 2) {
-            throw new YappyException("\t Please specify the '/by' date for postponing!");
+            throw new YappyException("Please specify the '/by' date for postponing!");
         }
         String byPart = parts[1];
         if (!byPart.contains("/by")) {
@@ -273,21 +272,21 @@ public class Parser {
      */
     private static Command parseRescheduleCommand(String args) throws YappyException {
         if (args.isEmpty()) {
-            throw new YappyException("\t Please specify the index of the task to be rescheduled!");
+            throw new YappyException("Please specify the index of the task to be rescheduled!");
         }
         String[] parts = args.split("\\s+", 2);
         int idx = parseIndex(parts[0], "reschedule");
         if (parts.length < 2) {
-            throw new YappyException("\t Please specify the '/from' and '/to' dates!");
+            throw new YappyException("Please specify the '/from' and '/to' dates!");
         }
         String fromTo = parts[1];
         String[] fromSplit = fromTo.split("/from", 2);
         if (fromSplit.length < 2) {
-            throw new YappyException("\t Reschedule must include '/from' and '/to' with dates!");
+            throw new YappyException("Reschedule must include '/from' and '/to' with dates!");
         }
         String[] toSplit = fromSplit[1].split("/to", 2);
         if (toSplit.length < 2) {
-            throw new YappyException("\t Reschedule must include '/to' with end date!");
+            throw new YappyException("Reschedule must include '/to' with end date!");
         }
         LocalDateTime from = parseDate(toSplit[0].trim(), "reschedule from");
         LocalDateTime to = parseDate(toSplit[1].trim(), "reschedule to");
@@ -306,17 +305,17 @@ public class Parser {
      */
     private static int parseIndex(String tokenOrArgs, String cmdName) throws YappyException {
         if (tokenOrArgs == null || tokenOrArgs.trim().isEmpty()) {
-            throw new YappyException("\t Please specify the index for '" + cmdName + "'!");
+            throw new YappyException("Please specify the index for '" + cmdName + "'!");
         }
         String token = tokenOrArgs.trim().split("\\s+")[0];
         try {
             int idx = Integer.parseInt(token) - 1;
             if (idx < 0) {
-                throw new YappyException("\t Index must be a positive integer!");
+                throw new YappyException("Index must be a positive integer!");
             }
             return idx;
         } catch (NumberFormatException e) {
-            throw new YappyException("\t Please input an integer index!");
+            throw new YappyException("Please input an integer index!");
         }
     }
 
@@ -332,12 +331,12 @@ public class Parser {
      */
     private static LocalDateTime parseDate(String dateString, String label) throws YappyException {
         if (dateString == null || dateString.isEmpty()) {
-            throw new YappyException("\t Please specify a date/time for " + label + " using format yyyy-MM-dd HH:mm");
+            throw new YappyException("Please specify a date/time for " + label + " using format yyyy-MM-dd HH:mm");
         }
         try {
             return LocalDateTime.parse(dateString, FORMATTER);
         } catch (DateTimeParseException e) {
-            throw new YappyException("\t Invalid date/time for " + label + ". Use format yyyy-MM-dd HH:mm");
+            throw new YappyException("Invalid date/time for " + label + ".\nUse format yyyy-MM-dd HH:mm");
         }
     }
 }
