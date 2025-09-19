@@ -30,10 +30,30 @@ public class Storage {
 
 
     /**
-     * @param filePath The path of the file where the tasks are to be stored in.
+     * Constructs a Storage object for managing task storage at the specified file path.
+     * <p>
+     * This constructor attempts to create the storage file if it does not already exist.
+     * If the parent directories of the file path do not exist, it will try to create them.
+     * </p>
+     *
+     * @param filePath The path of the file where tasks are stored.
+     * @throws YappyException if the storage file or its parent directories cannot be created or accessed.
      */
-    public Storage(String filePath) {
+    public Storage(String filePath) throws YappyException {
         this.file = Paths.get(filePath).toFile();
+        try {
+            File parentDir = file.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                if (!parentDir.mkdirs()) {
+                    throw new YappyException("Unable to create storage directories at: " + parentDir.getPath());
+                }
+            }
+            if (!file.exists() && !file.createNewFile()) {
+                throw new YappyException("Unable to create new storage file at: " + filePath);
+            }
+        } catch (IOException e) {
+            throw new YappyException("Unable to create new storage file: " + e.getMessage());
+        }
     }
 
     /**

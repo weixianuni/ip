@@ -27,7 +27,12 @@ public class Yappy {
      */
     public Yappy() {
         ui = new Ui();
-        storage = new Storage(storagePath);
+        try {
+            storage = new Storage(storagePath);
+        } catch (YappyException e) {
+            ui.showLoadingError();
+            throw new RuntimeException(e);
+        }
         try {
             tasks = new TaskList(storage.loadTask());
         } catch (YappyException e) {
