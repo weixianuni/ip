@@ -46,12 +46,12 @@ public class TaskList {
      */
     public Task delete(int index) throws YappyException {
         if (tasks.isEmpty()) {
-            throw new YappyException("\t You have no tasks in your list!");
+            throw new YappyException("You have no tasks in your list!");
         } else {
             try {
                 return this.tasks.remove(index);
             } catch (IndexOutOfBoundsException e) {
-                throw new YappyException("\t Please specify a valid index!");
+                throw new YappyException("Please specify a valid index!");
             }
         }
     }
@@ -65,14 +65,14 @@ public class TaskList {
      */
     public Task mark(int index) throws YappyException {
         if (tasks.isEmpty()) {
-            throw new YappyException("\t You have no tasks in your list!");
+            throw new YappyException("You have no tasks in your list!");
         } else {
             try {
                 Task task = this.tasks.get(index);
                 task.setCompleted();
                 return task;
             } catch (IndexOutOfBoundsException e) {
-                throw new YappyException("\t Please specify a valid index!");
+                throw new YappyException("Please specify a valid index!");
             }
         }
     }
@@ -86,14 +86,14 @@ public class TaskList {
      */
     public Task unmark(int index) throws YappyException {
         if (tasks.isEmpty()) {
-            throw new YappyException("\t You have no tasks in your list!");
+            throw new YappyException("You have no tasks in your list!");
         } else {
             try {
                 Task task = this.tasks.get(index);
                 task.setUncompleted();
                 return task;
             } catch (IndexOutOfBoundsException e) {
-                throw new YappyException("\t Please specify a valid index!");
+                throw new YappyException("Please specify a valid index!");
             }
         }
     }
