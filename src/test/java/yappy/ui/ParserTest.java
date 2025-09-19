@@ -43,7 +43,7 @@ public class ParserTest {
     }
 
     @Test
-    public void testParse_markCommand_missingIndex_throwsException() {
+    public void testParseMarkCommand_missingIndex_throwsException() {
         YappyException e = assertThrows(YappyException.class, () -> Parser.parse("mark"));
         assertEquals("Please specify the index for 'mark'!", e.getMessage());
     }
