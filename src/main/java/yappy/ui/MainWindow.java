@@ -5,6 +5,7 @@ import java.util.Objects;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -17,6 +18,8 @@ import javafx.util.Duration;
  * Controller for the main GUI.
  */
 public class MainWindow extends AnchorPane {
+    @FXML
+    private Button sendButton;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -48,6 +51,12 @@ public class MainWindow extends AnchorPane {
         yappy = d;
     }
 
+    private void exitAfterDelay() {
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> Platform.exit());
+        delay.play();
+    }
+
     /**
      * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
      * the dialog container. Clears the user input after processing.
@@ -67,9 +76,7 @@ public class MainWindow extends AnchorPane {
         // System.out.println(response);
         userInput.clear();
         if (input.equals("bye")) {
-            PauseTransition delay = new PauseTransition(Duration.seconds(2)); // 2-second delay
-            delay.setOnFinished(event -> Platform.exit());
-            delay.play();
+            exitAfterDelay();
         }
     }
 }
