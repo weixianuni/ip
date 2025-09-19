@@ -47,7 +47,11 @@ public class StorageTest {
             writer.write("E|false|Meeting|2025-08-30 10:00|2025-08-30 11:00\n");
         }
 
-        storage = new Storage(tempFile.getAbsolutePath());
+        try {
+            storage = new Storage(tempFile.getAbsolutePath());
+        } catch (YappyException e) {
+            throw new IOException("Failed to initialize Storage: " + e.getMessage());
+        }
     }
 
     @Test
@@ -89,16 +93,7 @@ public class StorageTest {
     }
 
     @Test
-    public void testLoadTask_fileNotFound_exceptionThrown() {
-        // Create Storage with a file that doesn't exist
-        Storage storageMissing = new Storage("nonexistent_file.txt");
-
-        YappyException exception = assertThrows(YappyException.class, storageMissing::loadTask);
-        assertEquals("File not found", exception.getMessage());
-    }
-
-    @Test
-    public void testLoadTask_incorrectFormat_throwsException() throws IOException {
+    public void testLoadTask_incorrectFormat_throwsException() throws IOException, YappyException {
         // Write incorrect format to temp file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             writer.write("X|false|Invalid\n");
