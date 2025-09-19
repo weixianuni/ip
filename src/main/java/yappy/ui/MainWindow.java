@@ -15,7 +15,7 @@ import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
 /**
- * Controller for the main GUI.
+ * Controller for MainWindow. Provides the layout for the other controls.
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -51,6 +51,9 @@ public class MainWindow extends AnchorPane {
         yappy = d;
     }
 
+    /**
+     * Exits the application after a 2-second delay.
+     */
     private void exitAfterDelay() {
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
         delay.setOnFinished(event -> Platform.exit());
