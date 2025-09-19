@@ -108,7 +108,7 @@ public class Parser {
      */
     private static Command parseFindCommand(String args) throws YappyException {
         if (args.isEmpty()) {
-            throw new YappyException("\t Please specify the query string!");
+            throw new YappyException("Please specify the query string!");
         }
         String[] queries = java.util.Arrays.stream(args.split(","))
                 .map(String::trim)
