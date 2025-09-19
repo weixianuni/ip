@@ -30,9 +30,9 @@ public class MainWindow extends AnchorPane {
     private Yappy yappy;
 
     private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
-            "/images/DaUser.png")));
+            "/images/DaUser.jpeg")));
     private final Image yappyImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
-            "/images/DaYappy.png")));
+            "/images/DaYappy.jpeg")));
 
     /**
      * Initializes the main window, binds the scroll pane to the dialog container height,
