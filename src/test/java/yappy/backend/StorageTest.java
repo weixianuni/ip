@@ -33,7 +33,7 @@ public class StorageTest {
 
     /**
      * Helper method to test loadTask method
-     * @throws IOException
+     * @throws IOException If there is an error creating the temp file
      */
     @BeforeEach
     public void setUp() throws IOException {
@@ -80,11 +80,31 @@ public class StorageTest {
     }
 
     @Test
+    public void testSave_emptyList_createsEmptyFile() throws YappyException {
+        ArrayList<Task> emptyTasks = new ArrayList<>();
+        storage.save(emptyTasks);
+
+        ArrayList<Task> loaded = storage.loadTask();
+        assertEquals(0, loaded.size());
+    }
+
+    @Test
     public void testLoadTask_fileNotFound_exceptionThrown() {
         // Create Storage with a file that doesn't exist
         Storage storageMissing = new Storage("nonexistent_file.txt");
 
         YappyException exception = assertThrows(YappyException.class, storageMissing::loadTask);
         assertEquals("File not found", exception.getMessage());
+    }
+
+    @Test
+    public void testLoadTask_incorrectFormat_throwsException() throws IOException {
+        // Write incorrect format to temp file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            writer.write("X|false|Invalid\n");
+        }
+        Storage badStorage = new Storage(tempFile.getAbsolutePath());
+        YappyException exception = assertThrows(YappyException.class, badStorage::loadTask);
+        assertEquals("Incorrect format in Yappy.txt file!", exception.getMessage());
     }
 }
