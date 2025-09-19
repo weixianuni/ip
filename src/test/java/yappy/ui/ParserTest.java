@@ -16,19 +16,21 @@ public class ParserTest {
 
     private static final String COMMANDS_HELP =
             """
-            \t I don't understand. Available commands:
-            \t - bye
-            \t - list
-            \t - find <query1,query2,...>
-            \t - mark <index>
-            \t - unmark <index>
-            \t - delete <index>
-            \t - todo <description>
-            \t - deadline <description> /by <date>
-            \t - event <description> /from <date> /to <date>
-            \t - reschedule <index> /from <date> /to <date>
-            \t - postpone <index> /by <date>
-            \t Note: dates must use the format yyyy-MM-dd HH:mm""";
+            Sorry I do not understand what you're yapping about.
+            \t
+            Available commands:
+            - bye
+            - list
+            - find <query1,query2,...>
+            - mark <index>
+            - unmark <index>
+            - delete <index>
+            - todo <description>
+            - deadline <description> /by <date>
+            - event <description> /from <date> /to <date>
+            - reschedule <index> /from <date> /to <date>
+            - postpone <index> /by <date>
+            Note: dates must use the format yyyy-MM-dd HH:mm""";
 
     @Test
     public void testParse_exitCommand_returnExitCommand() throws YappyException {
@@ -38,6 +40,12 @@ public class ParserTest {
     @Test
     public void testParse_listCommand_returnListCommand() throws YappyException {
         assertInstanceOf(ListCommand.class, Parser.parse("list"));
+    }
+
+    @Test
+    public void testParse_markCommand_missingIndex_throwsException() {
+        YappyException e = assertThrows(YappyException.class, () -> Parser.parse("mark"));
+        assertEquals("Please specify the index for 'mark'!", e.getMessage());
     }
 
     @Test

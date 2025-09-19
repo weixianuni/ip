@@ -1,9 +1,10 @@
 package yappy.ui;
 
+import java.util.Objects;
+
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -22,19 +23,23 @@ public class MainWindow extends AnchorPane {
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
     private Yappy yappy;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private final Image userImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
+            "/images/DaUser.png")));
+    private final Image yappyImage = new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(
+            "/images/DaYappy.png")));
 
+    /**
+     * Initializes the main window, binds the scroll pane to the dialog container height,
+     * and adds a welcome message from Yappy.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().add(
-                DialogBox.getYappyDialog("Hello! I'm Yappy. How can I help you today?", dukeImage)
+                DialogBox.getYappyDialog("Hello! I'm Yappy. How can I help you today?", yappyImage)
         );
     }
 
@@ -49,14 +54,15 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
-        AudioClip clickSound = new AudioClip(getClass().getResource("/sounds/sent.mp3").toExternalForm());
+        AudioClip clickSound = new AudioClip(Objects.requireNonNull(getClass().getResource(
+                "/sounds/sent.mp3")).toExternalForm());
         clickSound.play();
         String input = userInput.getText();
 
         String response = yappy.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getYappyDialog(response, dukeImage)
+                DialogBox.getYappyDialog(response, yappyImage)
         );
         // System.out.println(response);
         userInput.clear();

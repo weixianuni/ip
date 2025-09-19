@@ -48,25 +48,10 @@ public class Storage {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if (!line.trim().isEmpty()) {
-                    String[] params = line.split("\\|");
-                    assert params.length >= 3 : "Incorrect format in storage file";
-                    switch (params[0]) {
-                    case "T":
-                        tasks.add(new ToDo(params[2], Boolean.parseBoolean(params[1])));
-                        break;
-                    case "E":
-                        tasks.add(new Event(params[2], Boolean.parseBoolean(params[1]),
-                                LocalDateTime.parse(params[3], FORMATTER), LocalDateTime.parse(params[4], FORMATTER)));
-                        break;
-                    case "D":
-                        tasks.add(new Deadline(params[2], Boolean.parseBoolean(params[1]),
-                                LocalDateTime.parse(params[3], FORMATTER)));
-                        break;
-                    default:
-                        throw new YappyException("Incorrect format in Yappy.txt file!");
-                    }
+                if (line.trim().isEmpty()) {
+                    continue;
                 }
+                tasks.add(lineParse(line));
             }
             return tasks;
         } catch (FileNotFoundException e) {
@@ -89,6 +74,29 @@ public class Storage {
             bfw.close();
         } catch (IOException e) {
             throw new YappyException(e.getMessage());
+        }
+    }
+    /**
+     * Parses a line from the storage file and returns the corresponding Task object.
+     *
+     * @param line The line from the storage file to be parsed.
+     * @return The Task object represented by the line.
+     * @throws YappyException If the format of the line is incorrect.
+     */
+    public Task lineParse(String line) throws YappyException {
+        String[] params = line.split("\\|");
+        assert params.length >= 3 : "Incorrect format in storage file!";
+        switch (params[0]) {
+        case "T":
+            return new ToDo(params[2], Boolean.parseBoolean(params[1]));
+        case "E":
+            return new Event(params[2], Boolean.parseBoolean(params[1]),
+                    LocalDateTime.parse(params[3], FORMATTER), LocalDateTime.parse(params[4], FORMATTER));
+        case "D":
+            return new Deadline(params[2], Boolean.parseBoolean(params[1]),
+                    LocalDateTime.parse(params[3], FORMATTER));
+        default:
+            throw new YappyException("Incorrect format in Yappy.txt file!");
         }
     }
 }
