@@ -9,7 +9,7 @@
 .reply-label {
     -fx-background-radius: 1em 1em 1em 0;
     -fx-border-radius: 1em 1em 1em 0;
-    -fx-background-color: #f05053; /* Light pinkish red color */
+    -fx-background-color: #ffffff;
 }
 
 #displayPicture {
