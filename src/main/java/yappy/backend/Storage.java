@@ -42,10 +42,10 @@ public class Storage {
     public Storage(String filePath) throws YappyException {
         this.file = Paths.get(filePath).toFile();
         try {
-            File parentDir = file.getParentFile();
-            if (parentDir != null && !parentDir.exists()) {
-                if (!parentDir.mkdirs()) {
-                    throw new YappyException("Unable to create storage directories at: " + parentDir.getPath());
+            File dataDir = new File("./data");
+            if (!dataDir.exists()) {
+                if (!dataDir.mkdirs()) {
+                    throw new YappyException("Unable to create storage directories at: " + dataDir.getPath());
                 }
             }
             if (!file.exists() && !file.createNewFile()) {
