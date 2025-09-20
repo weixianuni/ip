@@ -10,10 +10,9 @@
     <children>
         <TextField fx:id="userInput" layoutY="558.0" onAction="#handleUserInput" prefHeight="41.0" prefWidth="324.0" promptText="What's on your mind?" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="57.0" />
         <Button fx:id="sendButton" layoutX="324.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleUserInput" prefHeight="41.0" prefWidth="41.0" text="➤" style="-fx-background-radius: 20; -fx-font-size: 18px; -fx-background-color: #e1eec3; -fx-text-fill: #f05053;" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="8.0" />
-        <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" hvalue="1.0" prefHeight="557.0"
-                    prefWidth="400.0" vvalue="1.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0"
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="0.0"
                     AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <VBox fx:id="dialogContainer" prefHeight="552.0" prefWidth="388.0"/>
+            <VBox fx:id="dialogContainer"/>
         </ScrollPane>
     </children>
 </AnchorPane>
