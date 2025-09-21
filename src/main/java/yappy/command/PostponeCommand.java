@@ -1,6 +1,7 @@
 package yappy.command;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import yappy.backend.Storage;
 import yappy.backend.TaskList;
@@ -14,6 +15,8 @@ import yappy.ui.Ui;
  * any other type of task will return an error.
  */
 public class PostponeCommand extends Command {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final int index;
     private final LocalDateTime deadline;
 
@@ -38,11 +41,18 @@ public class PostponeCommand extends Command {
      * @throws YappyException If the input index is out of bounds.
      */
     public String execute(TaskList taskList, Ui ui, Storage storage) throws YappyException {
+        if (!(taskList.getTasks().get(this.index) instanceof Deadline)) {
+            throw new YappyException("You can only postpone a deadline task!");
+        }
         try {
             Deadline task = (Deadline) taskList.getTasks().get(this.index);
+            if (!this.deadline.isAfter(task.getByDate())) {
+                throw new YappyException("You can only set a date later than the current deadline: "
+                        + task.getByDate().format(FORMATTER) + "!");
+            }
             return task.postpone(this.deadline);
         } catch (IndexOutOfBoundsException e) {
-            throw new YappyException("Index out of bounds! Try again with a valid index");
+            throw new YappyException("Index out of bounds! Try again with a valid index.");
         }
     }
 }

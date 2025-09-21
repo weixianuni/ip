@@ -42,6 +42,9 @@ public class RescheduleCommand extends Command {
      * @throws YappyException If the input index is out of bounds.
      */
     public String execute(TaskList taskList, Ui ui, Storage storage) throws YappyException {
+        if (!(taskList.getTasks().get(this.index) instanceof Event)) {
+            throw new YappyException("You can only reschedule an event task!");
+        }
         try {
             Event task = (Event) taskList.getTasks().get(this.index);
             return task.reschedule(this.fromDate, this.toDate);
